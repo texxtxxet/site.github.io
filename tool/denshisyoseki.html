@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>電子書籍メーカー</title>
+    <style>
+        body {
+            background-color: #fff5f0;
+        }
+        .bold {
+            font-weight: bold;
+        }
+        .content {
+            margin-left: 20px;
+        }
+        textarea {
+            width: 80%;
+            margin-bottom: 10px;
+        }
+        h2 {
+            margin-top: 20px;
+            margin-bottom: 5px;
+        }
+    </style>
+</head>
+<body>
+    <br>
+    <textarea id="inputText" rows="10" cols="50" placeholder=""></textarea><br>
+    <input type="text" id="htmlTitle" placeholder="タイトルを入力" size="40"><br><br>
+    <button onclick="convertToHTML()">変換</button>
+    <button onclick="clearText()">クリア</button>
+    <h2>HTML CODE</h2>
+    <textarea id="outputHTML" rows="10" cols="50" readonly></textarea><br>
+    <input type="text" id="fileName" placeholder="ファイル名を入力" size="20">
+    <button onclick="downloadHTML()">HTMLを保存</button>
+    <h2>PREVIEW</h2>
+    <div id="preview" class="content"></div>
+    <script>
+        function convertToHTML() {
+            const inputText = document.getElementById('inputText').value;
+            const htmlTitle = document.getElementById('htmlTitle').value;
+            const lines = inputText.split('\n');
+            let htmlOutput = '';
+            lines.forEach(line => {
+                const boldedLine = line.replace(/「(.*?)」/g, '<span class="bold">「$1」</span>');
+                htmlOutput += boldedLine + '<br>';
+            });
+            const fullHtml = `
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>${htmlTitle}</title>
+    <style>
+        body {
+            background-color: #f5f4f5;
+        }
+        .bold {
+            font-weight: bold;
+        }
+        .content {
+            margin-left: 20px;
+        }
+        #autoScrollControls {
+            position: fixed;
+            top: 10px;
+            right: 10px;
+            background-color: rgba(255, 255, 255, 0.8);
+            padding: 10px;
+            border-radius: 5px;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+        }
+        #autoScrollControls > * {
+            margin-bottom: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="content">
+        ${htmlOutput}
+    </div>
+    <div id="autoScrollControls">
+        <button id="toggleButton" onclick="toggleAutoScroll()">オートスクロール オン</button>
+        <div>
+            <input type="range" id="scrollSpeed" min="1" max="10" value="5" onchange="updateScrollSpeed()">
+            <span id="speedValue">5</span>
+        </div>
+    </div>
+    <script>
+        let isAutoScrolling = false;
+        let scrollSpeed = 5;
+        let scrollInterval;
+
+        function toggleAutoScroll() {
+            isAutoScrolling = !isAutoScrolling;
+            const toggleButton = document.getElementById('toggleButton');
+            if (isAutoScrolling) {
+                startAutoScroll();
+                toggleButton.textContent = 'オートスクロール オフ';
+            } else {
+                stopAutoScroll();
+                toggleButton.textContent = 'オートスクロール オン';
+            }
+        }
+
+        function startAutoScroll() {
+            scrollInterval = setInterval(() => {
+                window.scrollBy(0, scrollSpeed);
+                if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight) {
+                    stopAutoScroll();
+                }
+            }, 50);
+        }
+
+        function stopAutoScroll() {
+            clearInterval(scrollInterval);
+            isAutoScrolling = false;
+            document.getElementById('toggleButton').textContent = 'オートスクロール オン';
+        }
+
+        function updateScrollSpeed() {
+            scrollSpeed = document.getElementById('scrollSpeed').value;
+            document.getElementById('speedValue').textContent = scrollSpeed;
+            if (isAutoScrolling) {
+                stopAutoScroll();
+                startAutoScroll();
+            }
+        }
+    <\/script>
+</body>
+</html>`;
+            document.getElementById('outputHTML').value = fullHtml;
+            document.getElementById('preview').innerHTML = htmlOutput;
+        }
+
+        function clearText() {
+            document.getElementById('inputText').value = '';
+            document.getElementById('htmlTitle').value = '';
+            document.getElementById('outputHTML').value = '';
+            document.getElementById('fileName').value = '';
+            document.getElementById('preview').innerHTML = '';
+        }
+
+        function downloadHTML() {
+            const htmlContent = document.getElementById('outputHTML').value;
+            const fileName = document.getElementById('fileName').value || 'output';
+            const blob = new Blob([htmlContent], { type: 'text/html' });
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(blob);
+            link.download = `${fileName}.html`;
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
+    </script>
+</body>
+</html>
