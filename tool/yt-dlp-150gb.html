@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>yt-dlp Command Generator</title>
+    <style>
+        /* ChatGPTスタイルのコードブロック */
+        .code-block {
+            position: relative;
+            overflow: hidden;
+            background: #2f3640;
+            border-radius: 5px;
+            padding: 15px;
+            margin-bottom: 20px;
+            display: block; /* コマンドのウィンドウは最初から表示 */
+        }
+
+        .code-block h4 {
+            margin: 0 0 10px;
+            font-size: 16px;
+            color: #fff;
+        }
+
+        .code-block pre {
+            margin: 0;
+            font-family: 'Courier New', Courier, monospace;
+            color: #fff;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+            font-size: 14px;
+            line-height: 1.4;
+        }
+
+        .code-block button {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            padding: 5px 10px;
+            font-size: 14px;
+            cursor: pointer;
+        }
+
+        .code-block button:hover {
+            background-color: #45a049;
+        }
+
+        /* フォームスタイル */
+        .url-form input[type="text"] {
+            padding: 5px;
+            width: 80%;
+            margin-bottom: 10px;
+        }
+
+        .url-form button {
+            padding: 5px 10px;
+            cursor: pointer;
+            margin-bottom: 5px; /* ボタンとコマンドの間の空白 */
+        }
+    </style>
+</head>
+<body>
+
+    <div class="url-form">
+        <label for="url-input">YouTube URL:</label><br>
+        <input type="text" id="url-input" placeholder="Enter YouTube URL"><br>
+        <button onclick="generateCommands()">Generate Commands</button>
+    </div>
+
+    <div class="code-block">
+        <h4>yt-dlp MP3 128kbps</h4>
+        <pre><code></code></pre>
+        <button onclick="copyCode(this)">Copy code</button>
+    </div>
+
+    <div class="code-block">
+        <h4>yt-dlp Audio Only (M4A 128kbps)</h4>
+        <pre><code></code></pre>
+        <button onclick="copyCode(this)">Copy code</button>
+    </div>
+
+    <div class="code-block">
+        <h4>yt-dlp Video and Audio (MP4)</h4>
+        <pre><code></code></pre>
+        <button onclick="copyCode(this)">Copy code</button>
+    </div>
+
+    <div class="code-block">
+        <h4>yt-dlp Custom Video and Audio (MP4 720p)</h4>
+        <pre><code></code></pre>
+        <button onclick="copyCode(this)">Copy code</button>
+    </div>
+    
+    <script>
+        // コードをクリップボードにコピーする関数
+        function copyCode(button) {
+            var codeBlock = button.parentNode.querySelector('pre');
+            var range = document.createRange();
+            range.selectNode(codeBlock);
+            window.getSelection().removeAllRanges();
+            window.getSelection().addRange(range);
+            document.execCommand('copy');
+            window.getSelection().removeAllRanges();
+        }
+
+        function generateCommands() {
+            var url = document.getElementById("url-input").value;
+            
+            // yt-dlp MP3 128kbps コマンド
+            var mp3Command = 'C:\\Users\\user\\yt-dlp\\yt-dlp -x --audio-format mp3 --audio-quality 128k -o "G:\\%(title)s.%(ext)s" ' + url;
+            var mp3CodeElement = document.querySelectorAll('.code-block code')[0];
+            mp3CodeElement.textContent = mp3Command;
+            
+            // yt-dlp Audio Only (M4A 128kbps) コマンド
+            var m4aCommand = 'C:\\Users\\user\\yt-dlp\\yt-dlp -x --audio-format m4a --audio-quality 128K -o "G:\\%(title)s.%(ext)s" ' + url;
+            var m4aCodeElement = document.querySelectorAll('.code-block code')[1];
+            m4aCodeElement.textContent = m4aCommand;
+            
+            // yt-dlp Video and Audio (MP4) コマンド
+            var mp4Command = 'C:\\Users\\user\\yt-dlp\\yt-dlp -f "bestvideo[ext=mp4]+bestaudio[ext=m4a]/mp4" -o "G:\\%(title)s.%(ext)s" ' + url;
+            var mp4CodeElement = document.querySelectorAll('.code-block code')[2];
+            mp4CodeElement.textContent = mp4Command;
+            
+            // yt-dlp Custom Video and Audio (MP4 720p) コマンド
+            var customCommand = 'C:\\Users\\user\\yt-dlp\\yt-dlp -f "bestvideo[height<=720][ext=mp4]+bestaudio[ext=m4a]/mp4" -o "G:\\%(title)s.%(ext)s" ' + url;
+            var customCodeElement = document.querySelectorAll('.code-block code')[3];
+            customCodeElement.textContent = customCommand;
+        }
+    </script>
+
+</body>
+</html>
