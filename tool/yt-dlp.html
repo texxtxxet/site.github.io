@@ -103,7 +103,7 @@
     
     <div class="code-block">
         <h4>SNS TEXT LIST Download</h4>
-        <pre><span style="font-size: 12px">C:\Users\user\yt-dlp\yt-dlp -f "bestvideo[ext=mp4]+bestaudio[ext=m4a]/mp4" --merge-output-format mp4 -o "F:\ダウンロード\%(id)s.%(ext)s" -a "F:\ダウンロード\yt-dlp-list.txt"</span></pre>
+        <pre><span style="font-size: 12px">C:\Users\user\yt-dlp\yt-dlp -f "bestvideo[ext=mp4]+bestaudio[ext=m4a]/mp4" --merge-output-format mp4 -o "E:\Download\%(id)s.%(ext)s" -a "E:\Download\yt-dlp-list.txt"</span></pre>
         <button onclick="copyCode(this)">Copy code</button>
     </div>
 
@@ -155,17 +155,17 @@
             customCodeElement.textContent = customCommand;
             
             // SNS MP4 Download コマンド
-            var snsCommand = 'C:\\Users\\user\\yt-dlp\\yt-dlp -f "bestvideo[ext=mp4]+bestaudio[ext=m4a]/mp4" --merge-output-format mp4 -o "F:\\ダウンロード\\%(title)s.%(ext)s" ' + url;
+            var snsCommand = 'C:\\Users\\user\\yt-dlp\\yt-dlp -f "bestvideo[ext=mp4]+bestaudio[ext=m4a]/mp4" --merge-output-format mp4 -o "E:\\Download\\%(title)s.%(ext)s" ' + url;
             var snsCodeElement = document.querySelectorAll('.code-block code')[5];
             snsCodeElement.textContent = snsCommand;
             
             // SNS MP4 Download（ID） コマンド
-            var snsIdCommand = 'C:\\Users\\user\\yt-dlp\\yt-dlp -f "bestvideo[ext=mp4]+bestaudio[ext=m4a]/mp4" --merge-output-format mp4 -o "F:\\ダウンロード\\%(id)s.%(ext)s" "' + url + '"';
+            var snsIdCommand = 'C:\\Users\\user\\yt-dlp\\yt-dlp -f "bestvideo[ext=mp4]+bestaudio[ext=m4a]/mp4" --merge-output-format mp4 -o "E:\\Download\\%(id)s.%(ext)s" "' + url + '"';
             var snsIdCodeElement = document.querySelectorAll('.code-block code')[1];
             snsIdCodeElement.textContent = snsIdCommand;
 
             // SNS MP4 Download（DATE） コマンド
-            var snsDateCommand = 'C:\\Users\\user\\yt-dlp\\yt-dlp -f "bestvideo[ext=mp4]+bestaudio[ext=m4a]/mp4" --merge-output-format mp4 -o "F:\\ダウンロード\\%(uploader)s - %(upload_date)s.%(ext)s" "' + url + '"';
+            var snsDateCommand = 'C:\\Users\\user\\yt-dlp\\yt-dlp -f "bestvideo[ext=mp4]+bestaudio[ext=m4a]/mp4" --merge-output-format mp4 -o "E:\\Download\\%(uploader)s - %(upload_date)s.%(ext)s" "' + url + '"';
             var snsDateCodeElement = document.querySelectorAll('.code-block code')[6];
             snsDateCodeElement.textContent = snsDateCommand;
         }
