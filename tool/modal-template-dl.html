@@ -45,23 +45,58 @@
       font-family: Arial, sans-serif;
       margin: 0;
     }
+
     .container {
       display: flex;
       flex-wrap: wrap;
     }
+
     .thumbnail {
       width: 240px; /* 統一のサムネイルサイズ */
       height: 140px; /* 統一のサムネイルサイズ */
-      margin: 10px;
-      margin: 10px;
+      margin: 11px;
+      margin: 11px;
       cursor: pointer;
       text-align: center;
     }
+
     /* キャプションのスタイル */
     .caption {
-      margin-top: -5px; /* キャプションとサムネイルの間隔を広げる */
-      font-size: 14px;
-    }
+     margin-top: -10px; /* キャプションとサムネイルの間隔を広げる */
+     font-size: 14px;
+     position: relative;
+     display: inline-block;
+     cursor: pointer;
+     }
+
+     .caption:hover::after {
+     content: attr(data-fulltext); /* キャプションの全テキストを表示 */
+     position: absolute;
+     left: 0;
+     top: 100%;
+     background-color: rgba(0, 0, 0, 0.8);
+     color: #fff;
+     padding: 5px 10px;
+     border-radius: 5px;
+     white-space: nowrap;
+     z-index: 10;
+     transform: translateY(5px);
+     font-size: 12px;
+     display: block;
+     max-width: 300px; /* ポップアップの最大幅を指定 */
+     }
+
+     .caption:hover::before {
+     content: '';
+     position: absolute;
+     top: 100%;
+     left: 10px;
+     border-width: 5px;
+     border-style: solid;
+     border-color: rgba(0, 0, 0, 0.8) transparent transparent transparent;
+     z-index: 10;
+     }
+
     .thumbnail img {
       width: 100%;
       height: 100%;
@@ -113,7 +148,7 @@
   <!--
 <div class="thumbnail" onclick="showImage('img/〇.jpg')">
   <img src="img/〇.jpg">
-     <div class="caption">「」</div>
+  <div class="caption" data-fulltext="「」">「」</div>
 </div>
 
 <div class="thumbnail" onclick="showImage('img/〇.jpg')">
