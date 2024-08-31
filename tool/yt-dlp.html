@@ -96,6 +96,12 @@
     </div>
 
     <div class="code-block">
+        <h4>yt-dlp Custom Video and Audio (MP4 1080p 4000kbps)</h4>
+        <pre><code></code></pre>
+        <button onclick="copyCode(this)">Copy code</button>
+    </div>
+    
+    <div class="code-block">
         <h4>yt-dlp Custom Video and Audio (MP4 720p)</h4>
         <pre><code></code></pre>
         <button onclick="copyCode(this)">Copy code</button>
@@ -149,14 +155,19 @@
             var mp4CodeElement = document.querySelectorAll('.code-block code')[3];
             mp4CodeElement.textContent = mp4Command;
             
+            // yt-dlp Custom Video and Audio (MP4 1080p 4000kbps) コマンド
+            var custom1080pCommand = 'C:\\Users\\user\\yt-dlp\\yt-dlp -f "bestvideo[height<=1080][vbr<=4000][ext=mp4]+bestaudio[ext=m4a]/mp4" -o "E:\\%(title)s.%(ext)s" ' + url;
+            var custom1080pCodeElement = document.querySelectorAll('.code-block code')[4];
+            custom1080pCodeElement.textContent = custom1080pCommand;
+            
             // yt-dlp Custom Video and Audio (MP4 720p) コマンド
-            var customCommand = 'C:\\Users\\user\\yt-dlp\\yt-dlp -f "bestvideo[height<=720][ext=mp4]+bestaudio[ext=m4a]/mp4" -o "E:\\%(title)s.%(ext)s" ' + url;
-            var customCodeElement = document.querySelectorAll('.code-block code')[4];
-            customCodeElement.textContent = customCommand;
+            var custom720pCommand = 'C:\\Users\\user\\yt-dlp\\yt-dlp -f "bestvideo[height<=720][ext=mp4]+bestaudio[ext=m4a]/mp4" -o "E:\\%(title)s.%(ext)s" ' + url;
+            var custom720pCodeElement = document.querySelectorAll('.code-block code')[5];
+            custom720pCodeElement.textContent = custom720pCommand;
             
             // SNS MP4 Download コマンド
             var snsCommand = 'C:\\Users\\user\\yt-dlp\\yt-dlp -f "bestvideo[ext=mp4]+bestaudio[ext=m4a]/mp4" --merge-output-format mp4 -o "E:\\Download\\%(title)s.%(ext)s" ' + url;
-            var snsCodeElement = document.querySelectorAll('.code-block code')[5];
+            var snsCodeElement = document.querySelectorAll('.code-block code')[6];
             snsCodeElement.textContent = snsCommand;
             
             // SNS MP4 Download（ID） コマンド
@@ -165,8 +176,8 @@
             snsIdCodeElement.textContent = snsIdCommand;
 
             // SNS MP4 Download（DATE） コマンド
-            var snsDateCommand = 'C:\\Users\\user\\yt-dlp\\yt-dlp -f "bestvideo[ext=mp4]+bestaudio[ext=m4a]/mp4" --merge-output-format mp4 -o "E:\\Download\\%(uploader)s - %(upload_date)s.%(ext)s" "' + url + '"';
-            var snsDateCodeElement = document.querySelectorAll('.code-block code')[6];
+            var snsDateCommand = 'C:\\Users\\user\\yt-dlp\\yt-dlp -f "bestvideo[ext=mp4]+bestaudio[ext=m4a]/mp4" --merge-output-format mp4 -o "E:\\Download\\%(upload_date)s.%(ext)s" "' + url + '"';
+            var snsDateCodeElement = document.querySelectorAll('.code-block code')[7];
             snsDateCodeElement.textContent = snsDateCommand;
         }
     </script>
