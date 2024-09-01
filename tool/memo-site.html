@@ -9,22 +9,28 @@
         font-family: Arial, sans-serif;
         margin: 0;
         padding: 0;
+        background-color: #f4f4f4;
     }
     #tabs {
         display: flex;
-        background-color: #333;
+        background-color: #ff8b3d; /* ヘッダーの背景色を変更 */
         padding: 10px;
     }
-    button {
-        background-color: #555;
+    .tab-button {
+        background-color: #666; /* ボタンの背景色を変更 */
         color: white;
         border: none;
-        padding: 10px 20px;
+        padding: 12px 25px; /* ボタンのパディングを調整 */
         margin-right: 5px;
         cursor: pointer;
+        border-radius: 5px; /* ボタンの角を丸く */
     }
-    button:hover {
-        background-color: #777;
+    .tab-button:hover {
+        background-color: #888; /* ホバー時の背景色を変更 */
+    }
+    .tab-button.active {
+        background-color: #999; /* アクティブなタブの背景色を変更 */
+        font-weight: bold;
     }
     .tab {
         display: none;
@@ -33,27 +39,41 @@
         display: block;
     }
     textarea {
-        width: 90%;
+        width: calc(100% - 40px); /* テキストエリアの幅をページ全体に調整 */
         height: 300px;
         margin: 10px;
         padding: 10px;
         font-size: 16px;
+        border-radius: 5px; /* テキストエリアの角を丸く */
+        border: 1px solid #ccc; /* テキストエリアの枠線 */
+        box-shadow: 0 2px 5px rgba(0,0,0,0.1); /* テキストエリアのシャドウ */
     }
     .button-group {
-        margin-left: 10px;
+        margin: 10px;
+        display: flex;
+        justify-content: space-between;
+    }
+    .button-group button {
+        background-color: #007bff; /* 保存と読み込みボタンの背景色を変更 */
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        cursor: pointer;
+        border-radius: 5px; /* ボタンの角を丸く */
+    }
+    .button-group button:hover {
+        background-color: #0056b3; /* ホバー時の背景色を変更 */
     }
 </style>
 </head>
 <body>
-
 <div id="tabs">
-    <button onclick="openTab('tab1')">①</button>
-    <button onclick="openTab('tab2')">②</button>
-    <button onclick="openTab('tab3')">③</button>
-    <button onclick="openTab('tab4')">④</button>
-    <button onclick="openTab('tab5')">⑤</button>
+    <button class="tab-button active" onclick="openTab('tab1')">①</button>
+    <button class="tab-button" onclick="openTab('tab2')">②</button>
+    <button class="tab-button" onclick="openTab('tab3')">③</button>
+    <button class="tab-button" onclick="openTab('tab4')">④</button>
+    <button class="tab-button" onclick="openTab('tab5')">⑤</button>
 </div>
-
 <div id="tab1" class="tab active-tab">
     <textarea id="content1"></textarea><br>
     <div class="button-group">
@@ -61,7 +81,6 @@
         <button onclick="loadContent('content1')">読み込み</button>
     </div>
 </div>
-
 <div id="tab2" class="tab">
     <textarea id="content2"></textarea><br>
     <div class="button-group">
@@ -69,7 +88,6 @@
         <button onclick="loadContent('content2')">読み込み</button>
     </div>
 </div>
-
 <div id="tab3" class="tab">
     <textarea id="content3"></textarea><br>
     <div class="button-group">
@@ -77,7 +95,6 @@
         <button onclick="loadContent('content3')">読み込み</button>
     </div>
 </div>
-
 <div id="tab4" class="tab">
     <textarea id="content4"></textarea><br>
     <div class="button-group">
@@ -85,7 +102,6 @@
         <button onclick="loadContent('content4')">読み込み</button>
     </div>
 </div>
-
 <div id="tab5" class="tab">
     <textarea id="content5"></textarea><br>
     <div class="button-group">
@@ -93,7 +109,6 @@
         <button onclick="loadContent('content5')">読み込み</button>
     </div>
 </div>
-
 <script>
     function openTab(tabId) {
         var tabs = document.querySelectorAll('.tab');
@@ -101,12 +116,25 @@
             tab.classList.remove('active-tab');
         });
         document.getElementById(tabId).classList.add('active-tab');
+
+        var buttons = document.querySelectorAll('.tab-button');
+        buttons.forEach(function(button) {
+            button.classList.remove('active');
+        });
+        document.querySelector(`button[onclick="openTab('${tabId}')"]`).classList.add('active');
     }
 
     function saveContent(contentId) {
         var content = document.getElementById(contentId).value;
-        localStorage.setItem(contentId, content);
-        alert("内容が保存されました！");
+        if (localStorage.getItem(contentId)) {
+            if (confirm("既存のデータを上書きしますか？")) {
+                localStorage.setItem(contentId, content);
+                alert("内容が保存されました！");
+            }
+        } else {
+            localStorage.setItem(contentId, content);
+            alert("内容が保存されました！");
+        }
     }
 
     function loadContent(contentId) {
@@ -119,6 +147,5 @@
         }
     }
 </script>
-
 </body>
 </html>
