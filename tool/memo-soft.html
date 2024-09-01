@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ワークシートメモ帳</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+    }
+    #tabs {
+        display: flex;
+        background-color: #333;
+        padding: 10px;
+    }
+    button {
+        background-color: #555;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        margin-right: 5px;
+        cursor: pointer;
+    }
+    button:hover {
+        background-color: #777;
+    }
+    .tab {
+        display: none;
+    }
+    .active-tab {
+        display: block;
+    }
+    textarea {
+        width: 90%;
+        height: 300px;
+        margin: 10px;
+        padding: 10px;
+        font-size: 16px;
+    }
+    .button-group {
+        margin-left: 10px;
+    }
+</style>
+</head>
+<body>
+
+<div id="tabs">
+    <button onclick="openTab('tab1')">①</button>
+    <button onclick="openTab('tab2')">②</button>
+    <button onclick="openTab('tab3')">③</button>
+    <button onclick="openTab('tab4')">④</button>
+    <button onclick="openTab('tab5')">⑤</button>
+</div>
+
+<div id="tab1" class="tab active-tab">
+    <textarea id="content1"></textarea><br>
+    <div class="button-group">
+        <button onclick="saveContent('content1')">保存</button>
+        <button onclick="loadContent('content1')">読み込み</button>
+    </div>
+</div>
+
+<div id="tab2" class="tab">
+    <textarea id="content2"></textarea><br>
+    <div class="button-group">
+        <button onclick="saveContent('content2')">保存</button>
+        <button onclick="loadContent('content2')">読み込み</button>
+    </div>
+</div>
+
+<div id="tab3" class="tab">
+    <textarea id="content3"></textarea><br>
+    <div class="button-group">
+        <button onclick="saveContent('content3')">保存</button>
+        <button onclick="loadContent('content3')">読み込み</button>
+    </div>
+</div>
+
+<div id="tab4" class="tab">
+    <textarea id="content4"></textarea><br>
+    <div class="button-group">
+        <button onclick="saveContent('content4')">保存</button>
+        <button onclick="loadContent('content4')">読み込み</button>
+    </div>
+</div>
+
+<div id="tab5" class="tab">
+    <textarea id="content5"></textarea><br>
+    <div class="button-group">
+        <button onclick="saveContent('content5')">保存</button>
+        <button onclick="loadContent('content5')">読み込み</button>
+    </div>
+</div>
+
+<script>
+    function openTab(tabId) {
+        var tabs = document.querySelectorAll('.tab');
+        tabs.forEach(function(tab) {
+            tab.classList.remove('active-tab');
+        });
+        document.getElementById(tabId).classList.add('active-tab');
+    }
+
+    function saveContent(contentId) {
+        var content = document.getElementById(contentId).value;
+        localStorage.setItem(contentId, content);
+        alert("内容が保存されました！");
+    }
+
+    function loadContent(contentId) {
+        var content = localStorage.getItem(contentId);
+        if (content) {
+            document.getElementById(contentId).value = content;
+            alert("内容が読み込まれました！");
+        } else {
+            alert("保存された内容がありません！");
+        }
+    }
+</script>
+
+</body>
+</html>
