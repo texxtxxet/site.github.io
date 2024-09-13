@@ -161,6 +161,8 @@ function showImage(index) {
 
     currentIndex = index;
     document.getElementById('modalViewer').style.display = 'flex';
+
+    // キーボードイベントリスナーを追加
     document.addEventListener('keydown', handleKeyPress);
     modalImage.addEventListener('touchstart', handleTouchStart);
     modalImage.addEventListener('touchend', handleTouchEnd);
@@ -176,11 +178,13 @@ function showVideo(index) {
     modalImage.style.display = 'none';
     modalVideo.style.display = 'block';
     modalVideo.src = thumbnails[index].src;
+    modalVideo.loop = true; // 動画をループ再生する
+    modalVideo.play();
 
     currentIndex = index;
     document.getElementById('modalViewer').style.display = 'flex';
-    modalVideo.play();
 
+    // キーボードイベントリスナーを追加
     document.addEventListener('keydown', handleKeyPress);
     modalVideo.addEventListener('touchstart', handleTouchStart);
     modalVideo.addEventListener('touchend', handleTouchEnd);
@@ -224,7 +228,7 @@ function nextImage() {
 // モーダルを閉じる関数
 function closeModal() {
     document.getElementById('modalViewer').style.display = 'none';
-    document.removeEventListener('keydown', handleKeyPress);
+    document.removeEventListener('keydown', handleKeyPress); // キーボードイベントリスナーを削除
 
     const modalImage = document.getElementById('modalImage');
     modalImage.removeEventListener('touchstart', handleTouchStart);
@@ -282,6 +286,7 @@ function openImageInNewTab() {
 
 // ページのHTMLコンテンツが完全に読み込まれたときに、initializeGallery関数を実行する
 document.addEventListener('DOMContentLoaded', initializeGallery);
+
 </script>
 </body>
 </html>
