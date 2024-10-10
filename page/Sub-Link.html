@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sub Link</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            display: flex;
+            gap: 20px;
+            position: relative;
+        }
+        .container::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 50%;
+            width: 1px;
+            background-color: #ccc;
+            transform: translateX(-50%);
+        }
+        .column {
+            flex: 1;
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            grid-gap: 10px;
+        }
+        .card {
+            background-color: #ffffff;
+            border-radius: 5px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        .card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+        .card a {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 50px;
+            text-decoration: none;
+            color: #ffffff;
+            font-weight: bold;
+            text-align: center;
+            font-size: 14px;
+　　　　　　text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+        .column:nth-child(1) .card:nth-child(5n+1) a { background: linear-gradient(135deg, #ff6b6b, #ff8e8e); }
+        .column:nth-child(1) .card:nth-child(5n+2) a { background: linear-gradient(135deg, #4ecdc4, #45e5a8); }
+        .column:nth-child(1) .card:nth-child(5n+3) a { background: linear-gradient(135deg, #45b7d1, #5ccfeb); }
+        .column:nth-child(1) .card:nth-child(5n+4) a { background: linear-gradient(135deg, #f7b731, #ffd66b); }
+        .column:nth-child(1) .card:nth-child(5n) a { background: linear-gradient(135deg, #5d62bc, #8186d5); }
+        
+        .column:nth-child(2) .card:nth-child(5n+1) a { background: linear-gradient(135deg, #ff6b6b, #ff8e8e); }
+        .column:nth-child(2) .card:nth-child(5n+2) a { background: linear-gradient(135deg, #4ecdc4, #45e5a8); }
+        .column:nth-child(2) .card:nth-child(5n+3) a { background: linear-gradient(135deg, #45b7d1, #5ccfeb); }
+        .column:nth-child(2) .card:nth-child(5n+4) a { background: linear-gradient(135deg, #f7b731, #ffd66b); }
+        .column:nth-child(2) .card:nth-child(5n) a { background: linear-gradient(135deg, #5d62bc, #8186d5); }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="column">
+            <!-- 左カラムのカード (25個) -->
+            <div class="card"><a href="https://www.instagram.com/goddessmiyeon_/" target="_blank">goddessmiyeon</a></div>
+            <div class="card"><a href="https://x.com/searchmiyeon" target="_blank">searchmiyeon</a></div>
+            <div class="card"><a href="https://x.com/FranLiong" target="_blank">FranLiong</a></div>
+            <div class="card"><a href="https://www.instagram.com/mysanatwice/" target="_blank">mysanatwice</a></div>
+            <div class="card"><a href="https://www.instagram.com/sntozaki/" target="_blank">sanatozaki</a></div>
+            <div class="card"><a href="https://www.instagram.com/jisoo_thenews/" target="_blank">JISOO NEWS</a></div>
+            <div class="card"><a href="https://www.instagram.com/tzuyubestgirl/" target="_blank">tzuyubestgirl</a></div>
+            <div class="card"><a href="https://www.instagram.com/tzuyusta_/" target="_blank">tzuyusta_</a></div>
+            <div class="card"><a href="#" target="_blank">－</a></div>
+            <div class="card"><a href="#" target="_blank">－</a></div>
+            <div class="card"><a href="https://x.com/akn19mj" target="_blank">瑞原明奈</a></div>
+            <div class="card"><a href="https://x.com/search?q=%E7%91%9E%E5%8E%9F%E6%98%8E%E5%A5%88%20OR%20%23%E7%91%9E%E5%8E%9F%E6%98%8E%E5%A5%88%20OR%20%E7%91%9E%E5%8E%9F%E3%83%97%E3%83%AD%20filter%3Aimages&src=saved_search_click&f=live" target="_blank">瑞原image</a></div>
+            <div class="card"><a href="https://akinamizuhara.com/" target="_blank"><span style="font-size: 12px">akinamizuhara.com</span></a></div>
+            <div class="card"><a href="https://twitter.com/chiharushida__" target="_blank">志田千陽</a></div>            <div class="card"><a href="#" target="_blank">－</a></div>
+            <div class="card"><a href="#" target="_blank">－</a></div>
+            <div class="card"><a href="#" target="_blank">－</a></div>
+            <div class="card"><a href="#" target="_blank">－</a></div>
+            <div class="card"><a href="#" target="_blank">－</a></div>
+            <div class="card"><a href="#" target="_blank">－</a></div>
+            <div class="card"><a href="https://weathernews.jp/onebox/tenki/fukushima/07204/ "target="_blank">ウェザーニュース</a></div>
+            <div class="card"><a href="https://weather.yahoo.co.jp/weather/jp/7/3620/7204.html" target="_blank">Yahoo！天気</a></div>
+            <div class="card"><a href="https://www.google.com/search?q=%E5%A4%A9%E6%B0%97" target="_blank">Google（天気）</a></div>
+            <div class="card"><a href="https://tenki.jp/leisure/fishing/2/10/21011/" target="_blank">tenki.jp</a></div>
+            <div class="card"><a href="#" target="_blank">－</a></div>
+            <!-- ... 22個のカードを追加 ... -->
+        </div>
+        <div class="column">
+            <!-- 右カラムのカード (25個) -->
+            <div class="card"><a href="#" target="_blank">－</a></div>
+            <div class="card"><a href="#" target="_blank">－</a></div>
+            <div class="card"><a href="#" target="_blank">－</a></div>
+            <div class="card"><a href="#" target="_blank">－</a></div>
+            <div class="card"><a href="#" target="_blank">－</a></div>
+            <div class="card"><a href="#" target="_blank">－</a></div>
+            <div class="card"><a href="#" target="_blank">－</a></div>
+            <div class="card"><a href="#" target="_blank">－</a></div>
+            <div class="card"><a href="#" target="_blank">－</a></div>
+            <div class="card"><a href="#" target="_blank">－</a></div>
+            <div class="card"><a href="#" target="_blank">－</a></div>
+            <div class="card"><a href="#" target="_blank">－</a></div>
+            <div class="card"><a href="#" target="_blank">－</a></div>
+            <div class="card"><a href="#" target="_blank">－</a></div>
+            <div class="card"><a href="#" target="_blank">－</a></div>
+            <div class="card"><a href="#" target="_blank">－</a></div>
+            <div class="card"><a href="#" target="_blank">－</a></div>
+            <div class="card"><a href="#" target="_blank">－</a></div>
+            <div class="card"><a href="#" target="_blank">－</a></div>
+            <div class="card"><a href="#" target="_blank">－</a></div>
+            <div class="card"><a href="#" target="_blank">－</a></div>
+            <div class="card"><a href="#" target="_blank">－</a></div>
+            <div class="card"><a href="#" target="_blank">－</a></div>
+            <div class="card"><a href="#" target="_blank">－</a></div>
+            <div class="card"><a href="#" target="_blank">－</a></div>
+            <!-- ... 22個のカードを追加 ... -->
+        </div>
+    </div>
+</body>
+</html>
