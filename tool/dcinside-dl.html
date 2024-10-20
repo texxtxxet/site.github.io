@@ -1,0 +1,118 @@
+
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DCinside HTML Template Downloader</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            height: 100vh;
+            background: linear-gradient(135deg, #FF5733, #33FF57, #3357FF, #FF33A1);
+        }
+        #downloadBtn {
+            background-color: #0ff5c7;
+            border: none;
+            color: white;
+            padding: 15px 32px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
+            cursor: pointer;
+        }
+        #htmlContent {
+            width: 100%;
+            height: 300px;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>DCinside HTML Template Downloader</h1>
+    <button id="downloadBtn">ダウンロード</button>
+    <textarea id="htmlContent">
+<!DOCTYPE html>
+<html lang="jp">
+<head>
+    <meta charset="UTF-8">
+    <title>DCinside Template</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f9f9f9;
+            color: #333;
+        }
+        .container {
+            width: 80%;
+            margin: 0 auto;
+            background-color: #fff;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .post-header {
+            margin-bottom: 5px; /* 間隔を詰めるためにマージンを減らしました */
+            padding-bottom: 5px; /* 余白を調整しました */
+        }
+        .post-header h1 {
+            font-size: 18px;
+            margin: 0;
+        }
+        .post-info {
+            font-size: 14px;
+            color: #888;
+　　　　    margin-top: 5px; /* 上に少し寄っているので、マージンを追加して位置を調整 */
+        }
+        .post-content {
+            margin-top: 10px; /* 間隔を詰めるためにマージンを減らしました */
+            line-height: 1.6;
+            border-top: 2px solid blue; /* 太さと色を変更 */
+            padding-top: 10px;
+        }
+        .comments {
+            margin-top: 30px;
+        }
+        .comments h2 {
+            font-size: 16px;
+            margin-bottom: 10px;
+        }
+        .comment {
+            border-bottom: 1px solid #ddd;
+            padding: 10px 0;
+        }
+        .comment .comment-text {
+            margin-left: 20px;
+        }
+        .comment img {
+            display: block;
+            margin: 10px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="post-header">
+            <h1><a href="URL">－－－</a></h1>
+            <div class="post-info">－－－</div>
+        </div>
+        <div class="post-content">
+            －－－－<br>
+<span style="font-size: 12px; color: #ff0000">－－</span>
+        </div>
+    </div>
+
+    <div class="container comments">
+        <h2>コメント</h2>
+        <div class="comment">
+            <div class="comment-text">－－<br>
+<span style="font-size: 12px; color: #ff0000">－－</span></div>
+        </div>
+    </div>
+</body>
+</html>
+
