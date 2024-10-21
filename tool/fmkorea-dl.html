@@ -140,3 +140,21 @@
     </div>
 </body>
 </html>
+    </textarea>
+
+    <script>
+        document.getElementById('downloadBtn').addEventListener('click', function() {
+            var content = document.getElementById('htmlContent').value;
+            var blob = new Blob([content], {type: 'text/html'});
+            var url = URL.createObjectURL(blob);
+            var a = document.createElement('a');
+            a.href = url;
+            a.download = 'template.html';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        });
+    </script>
+</body>
+</html>
