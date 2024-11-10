@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ファイルダウンロード</title>
+    <style>
+        body {
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+            max-width: 700px;
+            margin: 0 auto;
+            padding: 30px;
+            background: linear-gradient(45deg, #ff6b6b, #f7b7a3, #4db8ff, #ff9f43, #80e0a7);
+            background-size: 600% 600%;
+            animation: gradientAnimation 15s ease infinite;
+            color: #333;
+        }
+
+        @keyframes gradientAnimation {
+            0% {
+                background-position: 0% 50%;
+            }
+            50% {
+                background-position: 100% 50%;
+            }
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+
+        h1 {
+            text-align: center;
+            font-size: 2.2em;
+            color: #222;
+            margin-bottom: 25px;
+        }
+
+        .download-section {
+            background-color: rgba(255, 255, 255, 0.9); /* 半透明の白背景 */
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            margin-bottom: 30px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .download-section h2 {
+            font-size: 1.6em;
+            color: #444;
+            border-bottom: 1px solid #ddd;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+        }
+
+        .download-item {
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: center;
+            width: 100%;
+        }
+
+        .download-link {
+            display: inline-block;
+            padding: 12px 20px;
+            background-color: #3a87d4;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 6px;
+            font-size: 1em;
+            font-weight: bold;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+
+        .download-link:hover {
+            background-color: #2e6ba3;
+            transform: translateY(-2px);
+        }
+
+        .download-link:active {
+            background-color: #2b5e89;
+            transform: translateY(0);
+        }
+
+        @media (max-width: 600px) {
+            body {
+                padding: 20px;
+            }
+
+            .download-link {
+                width: 100%;
+                text-align: center;
+                padding: 12px 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    
+    <div class="download-section">
+        
+        <div class="download-item">
+            <a href="samples/sample1.html" class="download-link" download>－－－</a>
+        </div>
+        
+        <div class="download-item">
+            <a href="samples/sample1.html" class="download-link" download>－－－</a>
+        </div>
+
+        <div class="download-item">
+            <a href="samples/sample1.html" class="download-link" download>－－－</a>
+        </div>
+
+        <div class="download-item">
+            <a href="samples/sample1.html" class="download-link" download>－－－</a>
+        </div>
+
+    </div>
+</body>
+</html>
