@@ -1,0 +1,80 @@
+
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>「」</title>
+    <style>
+body {
+    font-family: "游ゴシック", serif;
+    font-size: 16px;
+    line-height: 1.1;
+    color: #000;
+    background-color: #8b7e5b;
+    font-weight: bold;
+    text-align: left;
+    padding-left: 20px;
+    padding-right: 20px;
+    overflow: auto;
+    white-space: pre-wrap;
+}
+
+.text-container {
+    display: flex;
+    flex-direction: column;
+}
+
+.line {
+    background-color: #fff; /* 各行の背景色 */
+    border: 1px solid #ccc; /* 枠線の色と太さ */
+    padding: 10px; /* 内側の余白 */
+    margin-bottom: 5px; /* 各行の間隔 */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* 影を追加 */
+}
+
+.line2 {
+    background-color: #fff; /* 各行の背景色 */
+    border: 1px solid #ccc; /* 枠線の色と太さ */
+    padding: 1px; /* 内側の余白 */
+    margin-bottom: 5px; /* 各行の間隔 */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* 影を追加 */
+}
+
+    .thumbnail-container {
+      display: flex;
+      gap: 10px; /* サムネイル間のスペース */
+    }
+
+    .thumbnail {
+      width: 120px; /* サムネイルの幅 */
+      height: 120px; /* サムネイルの高さ */
+      object-fit: cover; /* 画像のアスペクト比を維持しつつサムネイルにフィット */
+    }
+
+.thumbnail-link {
+  text-decoration: none; /* リンクの下線を削除 */
+}
+
+    </style>
+</head>
+<body>
+    <div class="text-container">
+
+<div class="line2"><div class="thumbnail-container">
+    <a href="img/.webp" class="thumbnail-link" target="_blank">
+      <img class="thumbnail" src="img/.webp"></a>
+    <a href="img/.webp" class="thumbnail-link" target="_blank">
+      <img class="thumbnail" src="img/.webp"></a>
+  </div>
+</div>
+
+<div class="line"></div>
+
+        <!-- ここにさらに行を追加 -->
+<div class="line"></div>
+
+    </div>
+</body>
+</html>
+
