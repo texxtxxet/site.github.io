@@ -110,13 +110,13 @@
     
     <div class="code-block">
         <h4>SNS TEXT LIST Download</h4>
-        <pre><span style="font-size: 12px">C:\Users\user\yt-dlp\yt-dlp -f "bestvideo[ext=mp4]+bestaudio[ext=m4a]/mp4" --merge-output-format mp4 -o "E:\Download\%(id)s.%(ext)s" -a "E:\Download\yt-dlp-list.txt"</span></pre>
+        <pre><span style="font-size: 11.5px">C:\Users\user\yt-dlp\yt-dlp -f "bestvideo[ext=mp4]+bestaudio[ext=m4a]/mp4" --merge-output-format mp4 -o "E:\Download\%(id)s.%(ext)s" -a "E:\Media\yt-dlp-list.txt"</span></pre>
         <button onclick="copyCode(this)">Copy code</button>
     </div>
     
     <div class="code-block">
         <h4>Youtube 720p LIST Download</h4>
-        <pre><span style="font-size: 12px">C:\Users\user\yt-dlp\yt-dlp -f "bestvideo[height<=720][ext=mp4]+bestaudio[ext=m4a]/mp4" -o "E:\%(title)s.%(ext)s" -a "E:\Download\yt-dlp-list.txt"</span></pre>
+        <pre><span style="font-size: 11.5px">C:\Users\user\yt-dlp\yt-dlp -f "bestvideo[height<=720][ext=mp4]+bestaudio[ext=m4a]/mp4" -o "E:\%(title)s.%(ext)s" -a "E:\Media\yt-dlp-list.txt"</span></pre>
         <button onclick="copyCode(this)">Copy code</button>
     </div>
 
@@ -148,27 +148,27 @@
             var url = document.getElementById("url-input").value;
             
             // yt-dlp MP3 192kbps コマンド
-            var mp3Command = 'C:\\Users\\user\\yt-dlp\\yt-dlp -x --audio-format mp3 --audio-quality 192k -o "E:\\%(title)s.%(ext)s" ' + url;
+            var mp3Command = 'C:\\Users\\user\\yt-dlp\\yt-dlp -x --audio-format mp3 --audio-quality 192k -o "E:\\Download\\%(title)s.%(ext)s" ' + url;
             var mp3CodeElement = document.querySelectorAll('.code-block code')[2];
             mp3CodeElement.textContent = mp3Command;
             
             // yt-dlp Audio Only (M4A 128kbps) コマンド
-            var m4aCommand = 'C:\\Users\\user\\yt-dlp\\yt-dlp -x --audio-format m4a --audio-quality 128K -o "E:\\%(title)s.%(ext)s" ' + url;
+            var m4aCommand = 'C:\\Users\\user\\yt-dlp\\yt-dlp -x --audio-format m4a --audio-quality 128K -o "E:\\Download\\%(title)s.%(ext)s" ' + url;
             var m4aCodeElement = document.querySelectorAll('.code-block code')[0];
             m4aCodeElement.textContent = m4aCommand;
             
             // yt-dlp Video and Audio (MP4) コマンド
-            var mp4Command = 'C:\\Users\\user\\yt-dlp\\yt-dlp -f "bestvideo[ext=mp4]+bestaudio[ext=m4a]/mp4" -o "E:\\%(title)s.%(ext)s" ' + url;
+            var mp4Command = 'C:\\Users\\user\\yt-dlp\\yt-dlp -f "bestvideo[ext=mp4]+bestaudio[ext=m4a]/mp4" -o "E:\\Download\\%(title)s.%(ext)s" ' + url;
             var mp4CodeElement = document.querySelectorAll('.code-block code')[3];
             mp4CodeElement.textContent = mp4Command;
             
             // yt-dlp Custom Video and Audio (MP4 1080p 4000kbps) コマンド
-            var custom1080pCommand = 'C:\\Users\\user\\yt-dlp\\yt-dlp -f "bestvideo[height<=1080][vbr<=4000][ext=mp4]+bestaudio[ext=m4a]/mp4" -o "E:\\%(title)s.%(ext)s" ' + url;
+            var custom1080pCommand = 'C:\\Users\\user\\yt-dlp\\yt-dlp -f "bestvideo[height<=1080][vbr<=4000][ext=mp4]+bestaudio[ext=m4a]/mp4" -o "E:\\Download\\%(title)s.%(ext)s" ' + url;
             var custom1080pCodeElement = document.querySelectorAll('.code-block code')[4];
             custom1080pCodeElement.textContent = custom1080pCommand;
             
             // yt-dlp Custom Video and Audio (MP4 720p) コマンド
-            var custom720pCommand = 'C:\\Users\\user\\yt-dlp\\yt-dlp -f "bestvideo[height<=720][ext=mp4]+bestaudio[ext=m4a]/mp4" -o "E:\\%(title)s.%(ext)s" ' + url;
+            var custom720pCommand = 'C:\\Users\\user\\yt-dlp\\yt-dlp -f "bestvideo[height<=720][ext=mp4]+bestaudio[ext=m4a]/mp4" -o "E:\\Download\\%(title)s.%(ext)s" ' + url;
             var custom720pCodeElement = document.querySelectorAll('.code-block code')[5];
             custom720pCodeElement.textContent = custom720pCommand;
             
