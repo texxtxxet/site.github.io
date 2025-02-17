@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="ja">
 <head>
@@ -100,12 +101,13 @@
         <br>
     </div>
 
-    <div id="autoScrollControls">
+    <div id="autoScrollControls" style="display: flex; flex-direction: column; align-items: center;">
         <button id="toggleButton" onclick="toggleAutoScroll()">オートスクロール オン</button>
         <div>
             <input type="range" id="scrollSpeed" min="1" max="10" value="5" onchange="updateScrollSpeed()">
             <span id="speedValue">5</span>
         </div>
+        <button id="backToToc" onclick="scrollToToc()" style="align-self: center;">目次</button>
     </div>
 
     <script>
@@ -159,6 +161,13 @@
             if (isAutoScrolling) {
                 stopAutoScroll();
                 startAutoScroll();
+            }
+        }
+
+        function scrollToToc() {
+            const toc = document.querySelector('.toc');
+            if (toc) {
+            toc.scrollIntoView({ behavior: 'smooth' });
             }
         }
     </script>
