@@ -30,37 +30,61 @@
             margin-bottom: 5px;
         }
         /* 目次用の最小限のスタイルを追加 */
-        .toc {
-            margin-bottom: 20px;
-            display: flex; /* 横並びにする */
-            flex-wrap: wrap; /* 必要に応じて改行する */
-        }
-        .toc a {
-            color: inherit;
-            text-decoration: none;
-            margin-right: 10px; /* アイテム間のスペースを調整 */
-        }
-        .toc p {
-            margin: 0; /* 行間のスペースをなくす */
-            padding: 2px 0; /* 必要なら上下の余白を少し追加 */
-            line-height: 1; /* 行の高さを詰める */
-        }
-        .toc a:hover {
-            text-decoration: underline;
-        }
+    .toc {
+        margin-bottom: 20px;
+        display: flex;
+        flex-wrap: wrap;
+    }
+    .toc a {
+        color: inherit;
+        text-decoration: none;
+        margin-right: 10px;
+        position: relative; /* ツールチップの位置基準 */
+    }
+    .toc p {
+        margin: 0;
+        padding: 2px 0;
+        line-height: 1;
+    }
+    .toc a:hover {
+        text-decoration: underline;
+    }
+    
+    /* ツールチップのスタイル */
+    .toc a::after {
+        content: attr(data-tooltip);
+        position: absolute;
+        left: 50%;
+        bottom: 120%;
+        transform: translateX(-50%);
+        background-color: rgba(0, 0, 0, 0.75);
+        color: #fff;
+        padding: 5px 8px;
+        border-radius: 5px;
+        font-size: 12px;
+        white-space: nowrap;
+        opacity: 0;
+        visibility: hidden;
+        transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out;
+    }
+    
+    .toc a:hover::after {
+        opacity: 1;
+        visibility: visible;
+    }
     </style>
 </head>
 <body>
     <div class="content">
         <!-- 目次 --><br>
         <div class="toc">
-            <p><a href="#chapter1">①</a></p>
-            <p><a href="#chapter2">②</a></p>
-            <p><a href="#chapter3">③</a></p>
-            <p><a href="#chapter4">④</a></p>
-            <p><a href="#chapter5">⑤</a></p>
-            <p><a href="#chapter6">⑥</a></p>
-            <p><a href="#chapter7">⑦</a></p>
+            <p><a href="#chapter1" data-tooltip="第一章の説明">①</a></p>
+            <p><a href="#chapter2" data-tooltip="第二章の説明">②</a></p>
+            <p><a href="#chapter3" data-tooltip="第三章の説明">③</a></p>
+            <p><a href="#chapter4" data-tooltip="第四章の説明">④</a></p>
+            <p><a href="#chapter5" data-tooltip="第五章の説明">⑤</a></p>
+            <p><a href="#chapter6" data-tooltip="第六章の説明">⑥</a></p>
+            <p><a href="#chapter7" data-tooltip="第七章の説明">⑦</a></p>
         </div>
 
         <!-- 本文 -->
