@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>アナウンサー（ランダム）</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      margin: 0;
+      background-color: #f0f0f0;
+    }
+    .container {
+      text-align: center;
+      background-color: #fff;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+      width: 80%;
+      max-width: 500px;
+    }
+    button {
+      background-color: #4CAF50;
+      color: white;
+      font-size: 16px;
+      border: none;
+      padding: 10px 20px;
+      cursor: pointer;
+      border-radius: 5px;
+      margin: 10px;
+    }
+    button:hover {
+      background-color: #45a049;
+    }
+    #name {
+      font-size: 24px;
+      margin-top: 20px;
+      font-weight: bold;
+    }
+    .history {
+      margin-top: 20px;
+      max-height: 200px;
+      overflow-y: auto;
+    }
+    .history div {
+      padding: 5px;
+      border-bottom: 1px solid #ddd;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>女性有名人</h1>
+    <div>
+      <label for="numSelect">選ぶ人数: </label>
+      <input type="number" id="numSelect" value="1" min="1" max="10">
+    </div>
+    <button id="randomButton">Click！</button>
+    <div id="name"></div>
+
+    <h3>履歴</h3>
+    <div id="history" class="history"></div>
+  </div>
+
+  <script>
+    // 名前リスト（サンプルとして少数。実際には8000人分を入れる）
+    const names = ['井上清華', '内田嶺衣奈', '梅津弥英子', '海老原優香', '遠藤玲子', '小山内鈴奈', '小澤陽子', '川野良子', '小室瑛莉子', '佐久間みなみ', '佐々木恭子', '島田彩夏', '杉原千尋', '鈴木唯', '高崎春', '竹内友佳', '竹俣紅', '椿原慶子', '堤礼実', '永島優美', '新美有加', '西山喜久恵', '原田葵', '藤本万梨乃', '松﨑涼佳', '松村未央', '三上真奈', '宮澤智', '宮司愛海', '宮本真綾', '山﨑夕貴', '山中章子', '宇賀神メグ', '宇内梨沙', '浦野芽良', '江藤愛', '小倉弘子', '加藤シルビア', '上村彩子', '小林由未子', '近藤夏子', '佐々木舞音', '篠原梨菜', '高畑百合子', '田村真子', '出水麻衣', '外山惠理', '南後杏子', '野村彩也子', '日比麻音子', '古谷有美', '御手洗菜々', '山形純菜', '山本恵里伽', '山内あゆ', '良原安美', '吉村恵里子', '若林有子', '荒井理咲子', '安藤萌々', '上宮菜々子', '上山千穂', '加藤真輝子', '紀真耶', '斎藤ちはる', '佐藤ちひろ', '下平さやか', '下村彩里', '鈴木新彩', '住田紗里', '武内絵美', '田中萌', '田原萌々', '堂真理子', '野村真季', '萩野志保子', '林美桜', '林美沙希', '久冨慶子', '弘中綾香', '桝田沙也香', '本間智恵', '松岡朱里', '松尾由美子', '三谷紬', '三山賀子', '森葉子', '森川夕貴', '森山みなみ', '八木麻紗子', '矢島悠子', '山本雪乃', '渡辺瑠海', '石川みなみ', '井田由美', '岩田絵里奈', '後呂有紗', '浦野モモ', '小髙茉緒', '河出奈都美', '黒田みゆ', '郡司恭子', '後藤晴菜', '佐藤真知子', '佐藤梨那', '杉野真実', '杉原凜', '鈴江奈々', '瀧口麻衣', '滝菜月', '徳島えりか', '中島芽生', '並木雲楓', '忽滑谷こころ', '畑下由佳', '林田美学', '水卜麻美', '森富美', '山本里咲', '渡邉結衣', '結城さとみ', '伊東敏恵', '村上由利子', '安部みちこ', '礒野佑子', '小林千恵', '首藤奈知子', '井上あさひ', '鈴木奈穂子', '廣瀬智美', '杉浦友紀', '渡邊佐和子', '片山千恵子', '寺門亜衣子', '池田伸子', '牛田茉友', '合原明子', '桑子真帆', '和久田麻由子', '赤木野々花', '井田香菜子', '上原光紀', '澤田彩香', '保里小百合', '中山果奈', '林田理沙', '星麻琴', '副島萌生', '庭木櫻子', '畠山衣美', '森下絵理香', '浅野里香', '佐藤あゆみ', '是永千恵', '森田茉里恵', '山内泉', '安藤結衣', '豊島実季', '野口葵衣', '宮﨑あずさ', '吉岡真央', '浅田春奈', '荒木さくら', '川口由梨香', '大谷舞風', '菅谷鈴夏', '後藤佑季'];
+    let history = [];
+
+    document.getElementById('randomButton').addEventListener('click', function() {
+      const num = parseInt(document.getElementById('numSelect').value);
+      if (num > 0 && num <= names.length) {
+        let availableNames = [...names]; // 名前リストのコピーを作成
+        let selectedNames = [];
+        
+        for (let i = 0; i < num; i++) {
+          const index = Math.floor(Math.random() * availableNames.length);
+          selectedNames.push(availableNames[index]);
+          availableNames.splice(index, 1); // 選ばれた名前をリストから削除
+        }
+
+        // 選ばれた名前を表示
+        document.getElementById('name').innerText = `${selectedNames.join(', ')}`;
+
+        // 履歴を追加（最大5件まで）
+        history.unshift(selectedNames.join(', '));
+        if (history.length > 5) history.pop();
+
+        // 履歴を更新
+        updateHistory();
+      }
+    });
+
+    function updateHistory() {
+      const historyDiv = document.getElementById('history');
+      historyDiv.innerHTML = '';
+      history.forEach(entry => {
+        const div = document.createElement('div');
+        div.textContent = entry;
+        historyDiv.appendChild(div);
+      });
+    }
+  </script>
+</body>
+</html>
