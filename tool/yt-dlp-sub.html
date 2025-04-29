@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="jp">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>yt-dlp Subtitle Command Generator</title>
+    <style>
+        .code-block {
+            position: relative;
+            overflow: hidden;
+            background: #2f3640;
+            border-radius: 5px;
+            padding: 15px;
+            margin-bottom: 20px;
+            display: block;
+        }
+
+        .code-block h4 {
+            margin: 0 0 10px;
+            font-size: 16px;
+            color: #fff;
+        }
+
+        .code-block pre {
+            margin: 0;
+            font-family: 'Courier New', Courier, monospace;
+            color: #fff;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+            font-size: 14px;
+            line-height: 1.4;
+        }
+
+        .code-block button {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            padding: 5px 10px;
+            font-size: 14px;
+            cursor: pointer;
+        }
+
+        .code-block button:hover {
+            background-color: #45a049;
+        }
+
+        .url-form input[type="text"] {
+            padding: 5px;
+            width: 80%;
+            margin-bottom: 10px;
+        }
+
+        .url-form button {
+            padding: 5px 10px;
+            cursor: pointer;
+            margin-bottom: 5px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="url-form">
+        <label for="url-input">YouTube URL:</label><br>
+        <input type="text" id="url-input" placeholder="Enter YouTube URL"><br>
+        <button onclick="generateCommands()">Generate Commands</button>
+    </div>
+
+    <div class="code-block"><h4>日本語字幕</h4><pre><code></code></pre><button onclick="copyCode(this)">Copy code</button></div>
+    <div class="code-block"><h4>自動生成の日本語字幕</h4><pre><code></code></pre><button onclick="copyCode(this)">Copy code</button></div>
+    <div class="code-block"><h4>SRT形式で取得</h4><pre><code></code></pre><button onclick="copyCode(this)">Copy code</button></div>
+    <div class="code-block"><h4>字幕の言語リスト</h4><pre><code></code></pre><button onclick="copyCode(this)">Copy code</button></div>
+
+    <script>
+        function copyCode(button) {
+            var codeBlock = button.parentNode.querySelector('pre');
+            var range = document.createRange();
+            range.selectNode(codeBlock);
+            window.getSelection().removeAllRanges();
+            window.getSelection().addRange(range);
+            document.execCommand('copy');
+            window.getSelection().removeAllRanges();
+        }
+
+        function generateCommands() {
+            var urlInput = document.getElementById("url-input").value.trim();
+            var url = urlInput.split('&')[0];
+
+            var blocks = document.querySelectorAll('.code-block code');
+
+            blocks[0].textContent = 'C:\\Users\\user\\yt-dlp\\yt-dlp --write-subs --sub-lang ja --skip-download -o "E:\\Download\\%(title)s.%(ext)s" ' + url;
+            blocks[1].textContent = 'C:\\Users\\user\\yt-dlp\\yt-dlp --write-auto-subs --sub-lang ja --skip-download -o "E:\\Download\\%(title)s.%(ext)s" ' + url;
+            blocks[2].textContent = 'C:\\Users\\user\\yt-dlp\\yt-dlp --write-subs --sub-lang ja --sub-format srt --skip-download -o "E:\\Download\\%(title)s.%(ext)s" ' + url;
+            blocks[3].textContent = 'C:\\Users\\user\\yt-dlp\\yt-dlp --list-subs "' + url + '"';
+        }
+    </script>
+
+</body>
+</html>
