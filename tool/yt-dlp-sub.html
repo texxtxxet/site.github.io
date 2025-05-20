@@ -69,10 +69,13 @@
         <button onclick="generateCommands()">Generate Commands</button>
     </div>
 
-    <div class="code-block"><h4>日本語字幕</h4><pre><code></code></pre><button onclick="copyCode(this)">Copy code</button></div>
-    <div class="code-block"><h4>自動生成の日本語字幕</h4><pre><code></code></pre><button onclick="copyCode(this)">Copy code</button></div>
-    <div class="code-block"><h4>SRT形式で取得</h4><pre><code></code></pre><button onclick="copyCode(this)">Copy code</button></div>
-    <div class="code-block"><h4>字幕の言語リスト</h4><pre><code></code></pre><button onclick="copyCode(this)">Copy code</button></div>
+    <div class="code-block"><h4>翻訳された日本語字幕を動画に埋め込み（720P）</h4><pre><code></code></pre><button onclick="copyCode(this)">Copy code</button></div>
+    <div class="code-block"><h4>日本語字幕（ダウンロードのみ）</h4><pre><code></code></pre><button onclick="copyCode(this)">Copy code</button></div>
+    <div class="code-block"><h4>自動生成の日本語字幕（翻訳）</h4><pre><code></code></pre><button onclick="copyCode(this)">Copy code</button></div>
+    <div class="code-block"><h4>SRT形式で保存</h4><pre><code></code></pre><button onclick="copyCode(this)">Copy code</button></div>
+    <div class="code-block"><h4>字幕の言語リストを表示</h4><pre><code></code></pre><button onclick="copyCode(this)">Copy code</button></div>
+    <div class="code-block"><h4>日本語字幕を動画に埋め込み（720P）</h4><pre><code></code></pre><button onclick="copyCode(this)">Copy code</button></div>
+    <div class="code-block"><h4>翻訳された日本語字幕を動画に埋め込み（1080P 4000kbps）</h4><pre><code>C:\Users\user\yt-dlp\yt-dlp -f "bestvideo[height<=1080][vbr<=4000][ext=mp4]+bestaudio[ext=m4a]/mp4" -o "E:\Download\%(title)s.%(ext)s"</code></pre><button onclick="copyCode(this)">Copy code</button></div>
 
     <script>
         function copyCode(button) {
@@ -91,10 +94,13 @@
 
             var blocks = document.querySelectorAll('.code-block code');
 
-            blocks[0].textContent = 'C:\\Users\\user\\yt-dlp\\yt-dlp --write-subs --sub-lang ja --skip-download -o "E:\\Download\\%(title)s.%(ext)s" ' + url;
-            blocks[1].textContent = 'C:\\Users\\user\\yt-dlp\\yt-dlp --write-auto-subs --sub-lang ja --skip-download -o "E:\\Download\\%(title)s.%(ext)s" ' + url;
-            blocks[2].textContent = 'C:\\Users\\user\\yt-dlp\\yt-dlp --write-subs --sub-lang ja --sub-format srt --skip-download -o "E:\\Download\\%(title)s.%(ext)s" ' + url;
-            blocks[3].textContent = 'C:\\Users\\user\\yt-dlp\\yt-dlp --list-subs "' + url + '"';
+            blocks[0].textContent = 'C:\\Users\\user\\yt-dlp\\yt-dlp -f "bestvideo[height<=720][ext=mp4]+bestaudio[ext=m4a]/mp4" --write-auto-subs --sub-langs "ja.*" --embed-subs -o "E:\\Download\\%(title)s.%(ext)s" ' + url;
+            blocks[1].textContent = 'C:\\Users\\user\\yt-dlp\\yt-dlp --write-subs --sub-lang ja --skip-download -o "E:\\Download\\%(title)s.%(ext)s" ' + url;
+            blocks[2].textContent = 'C:\\Users\\user\\yt-dlp\\yt-dlp --write-auto-subs --sub-lang ja --skip-download -o "E:\\Download\\%(title)s.%(ext)s" ' + url;
+            blocks[3].textContent = 'C:\\Users\\user\\yt-dlp\\yt-dlp --write-subs --sub-lang ja --sub-format srt --skip-download -o "E:\\Download\\%(title)s.%(ext)s" ' + url;
+            blocks[4].textContent = 'C:\\Users\\user\\yt-dlp\\yt-dlp --list-subs "' + url + '"';
+            blocks[5].textContent = 'C:\\Users\\user\\yt-dlp\\yt-dlp -f "bestvideo[height<=720][ext=mp4]+bestaudio[ext=m4a]/mp4" --write-subs --sub-lang ja --embed-subs -o "E:\\Download\\%(title)s.%(ext)s" ' + url;
+            // 最後のコマンド（1080P）は固定値のため変更なし
         }
     </script>
 
