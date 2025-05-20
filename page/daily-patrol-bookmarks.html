@@ -95,10 +95,14 @@
   </main>
 
   <script>
-    // ダークモード切り替え
-    if (localStorage.getItem('theme') === 'dark' || (!localStorage.getItem('theme') && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-      document.documentElement.classList.add('dark');
-    }
+    // ランダムでテーマを設定（ダーク or ライト）
+if (Math.random() < 0.5) {
+  document.documentElement.classList.add('dark');
+  localStorage.setItem('theme', 'dark');
+} else {
+  document.documentElement.classList.remove('dark');
+  localStorage.setItem('theme', 'light');
+}
   </script>
 </body>
 </html>
