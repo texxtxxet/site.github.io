@@ -13,65 +13,62 @@
       margin: 0;
       font-family: Arial, sans-serif;
     }
-    .dark body {
-      background-color: #1f2937;
-    }
+
     main {
       max-width: 800px;
       margin: 0 auto;
       padding: 1.5rem;
       flex: 1;
       display: grid;
-      grid-template-columns: 1fr 1fr; /* 左右2カラム */
-      gap: 1rem;
+      grid-template-columns: 1fr 1fr;
+      gap: 3rem;
     }
+
     ul {
       list-style: none;
       padding: 0;
       margin: 0;
     }
+
     .bookmark-card {
       display: flex;
       align-items: center;
+      justify-content: center;
+      width: 100%;
       background-color: #ffffff;
       padding: 0.75rem;
-      border-radius: 0.375rem;
-      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+      border-radius: 0.5rem;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
       transition: transform 0.2s, box-shadow 0.2s;
-      margin-bottom: 1rem; /* アイテム間の間隔 */
+      margin-bottom: 1rem;
+      box-sizing: border-box;
     }
-    .dark .bookmark-card {
-      background-color: #374151;
-      box-shadow: 0 1px 3px rgba(255, 255, 255, 0.1);
+
+    .bookmark-card:first-child {
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3); /* 最初のカード影強調 */
     }
+
     .bookmark-card:hover {
       transform: translateY(-2px);
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.25);
     }
-    .dark .bookmark-card:hover {
-      box-shadow: 0 4px 8px rgba(255, 255, 255, 0.15);
-    }
+
     .bookmark-card a {
       color: #2563eb;
       text-decoration: none;
-      font-size: 0.875rem;
-      font-weight: 500;
+      font-size: 1rem;
+      font-weight: bold;
     }
-    .dark .bookmark-card a {
-      color: #60a5fa;
-    }
+
     .bookmark-card a:hover {
       text-decoration: underline;
     }
+
     footer {
       background-color: #ffffff;
       padding: 1rem;
       text-align: center;
       color: #6b7280;
-    }
-    .dark footer {
-      background-color: #374151;
-      color: #d1d5db;
     }
   </style>
 </head>
@@ -94,15 +91,5 @@
     </ul>
   </main>
 
-  <script>
-    // ランダムでテーマを設定（ダーク or ライト）
-if (Math.random() < 0.5) {
-  document.documentElement.classList.add('dark');
-  localStorage.setItem('theme', 'dark');
-} else {
-  document.documentElement.classList.remove('dark');
-  localStorage.setItem('theme', 'light');
-}
-  </script>
 </body>
 </html>
