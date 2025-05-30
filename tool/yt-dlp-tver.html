@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="jp">
+<head>
+    <meta charset="UTF-8">
+    <title>yt-dlp TVer Version Command Generator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f0f2f5;
+            padding: 40px;
+            color: #333;
+        }
+        h2 {
+            color: #4CAF50;
+            margin-bottom: 20px;
+        }
+        .section {
+            background: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            margin-top: -20px;
+            margin-bottom: 30px;
+        }
+        label {
+            font-weight: bold;
+        }
+        input[type="text"] {
+            padding: 8px;
+            width: 80%;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        button {
+            padding: 8px 15px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 5px;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        .code-block {
+            background: #2f3640;
+            color: #fff;
+            padding: 15px;
+            border-radius: 8px;
+            position: relative;
+            margin-top: 10px;
+            word-break: break-all;
+            min-height: 15px; /* 追加: 高さ固定 */
+            display: flex;
+            align-items: center;
+        }
+        .code-block code {
+            flex: 1;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+        }
+        .code-block button {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            background-color: #4CAF50;
+            color: #fff;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .code-block button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+
+<div class="section">
+    <label>📺 TVer URL</label><br>
+    <input type="text" id="tver-url" placeholder="https://tver.jp/episodes/xxxxxx"><br>
+    <button onclick="generateFCommand()">Generate -F Command</button>
+    <div class="code-block">
+        <code id="f-command"></code>
+        <button onclick="copyToClipboard('f-command')">Copy</button>
+    </div>
+</div>
+<br>
+<div class="section">
+    <label>🎥 Video Format (例: hls-0000-1)</label><br>
+    <input type="text" id="video-format" placeholder="例: hls-0000-1"><br><br>
+
+    <label>🔊 Audio Format (例: hls-ts_AUDIO-0_1-xxxx)</label><br>
+    <input type="text" id="audio-format" placeholder="例: hls-ts_AUDIO-0_1-xxxx"><br><br>
+
+    <button onclick="generateDownloadCommand()">Generate TVer Download Command</button>
+    <div class="code-block">
+        <code id="download-command"></code>
+        <button onclick="copyToClipboard('download-command')">Copy</button>
+    </div>
+</div>
+
+<script>
+function generateFCommand() {
+    var url = document.getElementById('tver-url').value.trim();
+    if(url) {
+        var command = `C:\\Users\\user\\yt-dlp\\yt-dlp -F "${url}"`;
+        document.getElementById('f-command').textContent = command;
+    }
+}
+
+function generateDownloadCommand() {
+    var url = document.getElementById('tver-url').value.trim();
+    var video = document.getElementById('video-format').value.trim();
+    var audio = document.getElementById('audio-format').value.trim();
+    var output = `E:\\Download\\%(title)s.%(ext)s`;
+
+    if(url && video && audio) {
+        var command = `C:\\Users\\user\\yt-dlp\\yt-dlp -f "${video}+${audio}" --merge-output-format mp4 -o "${output}" "${url}"`;
+        document.getElementById('download-command').textContent = command;
+    }
+}
+
+function copyToClipboard(id) {
+    var text = document.getElementById(id).textContent;
+    navigator.clipboard.writeText(text);
+}
+</script>
+
+</body>
+</html>
