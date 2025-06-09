@@ -17,7 +17,7 @@
         padding: 10px;
     }
     .tab-button {
-        background-color: #666; /* ボタンの背景色を変更 */
+        background-color: #666; /* デフォルトのボタンの背景色 */
         color: white;
         border: none;
         padding: 12px 25px; /* ボタンのパディングを調整 */
@@ -26,10 +26,20 @@
         border-radius: 5px; /* ボタンの角を丸く */
     }
     .tab-button:hover {
-        background-color: #888; /* ホバー時の背景色を変更 */
+        background-color: #888; /* ホバー時の背景色 */
     }
     .tab-button.active {
-        background-color: #999; /* アクティブなタブの背景色を変更 */
+        background-color: #999; /* アクティブなタブの背景色 */
+        font-weight: bold;
+    }
+    .tab-button.saved {
+        background-color: #28a745; /* 保存済みのタブの背景色 */
+    }
+    .tab-button.saved:hover {
+        background-color: #218838; /* 保存済みタブのホバー時の背景色 */
+    }
+    .tab-button.saved.active {
+        background-color: #1e7e34; /* 保存済みかつアクティブなタブの背景色 */
         font-weight: bold;
     }
     .tab {
@@ -54,7 +64,7 @@
         justify-content: space-between;
     }
     .button-group button {
-        background-color: #007bff; /* 保存と読み込みボタンの背景色を変更 */
+        background-color: #007bff; /* 保存と読み込みボタンの背景色 */
         color: white;
         border: none;
         padding: 10px 20px;
@@ -62,7 +72,7 @@
         border-radius: 5px; /* ボタンの角を丸く */
     }
     .button-group button:hover {
-        background-color: #0056b3; /* ホバー時の背景色を変更 */
+        background-color: #0056b3; /* ホバー時の背景色 */
     }
 </style>
 </head>
@@ -129,10 +139,12 @@
         if (localStorage.getItem(contentId)) {
             if (confirm("既存のデータを上書きしますか？")) {
                 localStorage.setItem(contentId, content);
+                updateButtonStyles();
                 alert("内容が保存されました！");
             }
         } else {
             localStorage.setItem(contentId, content);
+            updateButtonStyles();
             alert("内容が保存されました！");
         }
     }
@@ -146,6 +158,21 @@
             alert("保存された内容がありません！");
         }
     }
+
+    function updateButtonStyles() {
+        const contentIds = ['content1', 'content2', 'content3', 'content4', 'content5'];
+        contentIds.forEach((contentId, index) => {
+            const button = document.querySelector(`button[onclick="openTab('tab${index + 1}')"]`);
+            if (localStorage.getItem(contentId)) {
+                button.classList.add('saved');
+            } else {
+                button.classList.remove('saved');
+            }
+        });
+    }
+
+    // ページ読み込み時にボタンのスタイルを更新
+    window.onload = updateButtonStyles;
 </script>
 </body>
 </html>
