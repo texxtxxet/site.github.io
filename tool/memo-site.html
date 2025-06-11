@@ -15,17 +15,17 @@
         display: flex;
         background-color: #ff8b3d;
         padding: 10px;
-        overflow-x: auto; /* タブが多い場合にスクロール可能 */
+        overflow-x: auto;
+        white-space: nowrap;
     }
     .tab-button {
         background-color: #666;
         color: white;
         border: none;
-        padding: 12px 20px; /* ボタンサイズを少し小さく */
+        padding: 12px 25px;
         margin-right: 5px;
         cursor: pointer;
         border-radius: 5px;
-        white-space: nowrap;
     }
     .tab-button:hover {
         background-color: #888;
@@ -52,7 +52,7 @@
     }
     textarea {
         width: calc(100% - 40px);
-        height: 300px;
+        height: 430px;
         margin: 10px;
         padding: 10px;
         font-size: 16px;
@@ -61,8 +61,9 @@
         box-shadow: 0 2px 5px rgba(0,0,0,0.1);
     }
     .button-group {
-        margin: 10px;
+        margin: 5px 10px 10px 10px; /* 上: 2px, 右: 10px, 下: 10px, 左: 10px */
         display: flex;
+        align-items: center;
         justify-content: space-between;
     }
     .button-group button {
@@ -75,6 +76,18 @@
     }
     .button-group button:hover {
         background-color: #0056b3;
+    }
+    .button-group input[type="text"] {
+        padding: 8px;
+        font-size: 16px;
+        border-radius: 5px;
+        border: 1px solid #ccc;
+        flex-grow: 1;
+        margin: 0 10px;
+        max-width: 300px;
+    }
+    ::-webkit-scrollbar {
+        display: none;
     }
 </style>
 </head>
@@ -94,71 +107,81 @@
 <div id="tab1" class="tab active-tab">
     <textarea id="content1"></textarea><br>
     <div class="button-group">
-        <button onclick="saveContent('content1')">保存</button>
-        <button onclick="loadContent('content1')">読み込み</button>
+        <button onclick="saveContent('content1', 'title1')">保存</button>
+        <input type="text" id="title1" placeholder="タイトルを入力">
+        <button onclick="loadContent('content1', 'title1')">読み込み</button>
     </div>
 </div>
 <div id="tab2" class="tab">
     <textarea id="content2"></textarea><br>
     <div class="button-group">
-        <button onclick="saveContent('content2')">保存</button>
-        <button onclick="loadContent('content2')">読み込み</button>
+        <button onclick="saveContent('content2', 'title2')">保存</button>
+        <input type="text" id="title2" placeholder="タイトルを入力">
+        <button onclick="loadContent('content2', 'title2')">読み込み</button>
     </div>
 </div>
 <div id="tab3" class="tab">
     <textarea id="content3"></textarea><br>
     <div class="button-group">
-        <button onclick="saveContent('content3')">保存</button>
-        <button onclick="loadContent('content3')">読み込み</button>
+        <button onclick="saveContent('content3', 'title3')">保存</button>
+        <input type="text" id="title3" placeholder="タイトルを入力">
+        <button onclick="loadContent('content3', 'title3')">読み込み</button>
     </div>
 </div>
 <div id="tab4" class="tab">
     <textarea id="content4"></textarea><br>
     <div class="button-group">
-        <button onclick="saveContent('content4')">保存</button>
-        <button onclick="loadContent('content4')">読み込み</button>
+        <button onclick="saveContent('content4', 'title4')">保存</button>
+        <input type="text" id="title4" placeholder="タイトルを入力">
+        <button onclick="loadContent('content4', 'title4')">読み込み</button>
     </div>
 </div>
 <div id="tab5" class="tab">
     <textarea id="content5"></textarea><br>
     <div class="button-group">
-        <button onclick="saveContent('content5')">保存</button>
-        <button onclick="loadContent('content5')">読み込み</button>
+        <button onclick="saveContent('content5', 'title5')">保存</button>
+        <input type="text" id="title5" placeholder="タイトルを入力">
+        <button onclick="loadContent('content5', 'title5')">読み込み</button>
     </div>
 </div>
 <div id="tab6" class="tab">
     <textarea id="content6"></textarea><br>
     <div class="button-group">
-        <button onclick="saveContent('content6')">保存</button>
-        <button onclick="loadContent('content6')">読み込み</button>
+        <button onclick="saveContent('content6', 'title6')">保存</button>
+        <input type="text" id="title6" placeholder="タイトルを入力">
+        <button onclick="loadContent('content6', 'title6')">読み込み</button>
     </div>
 </div>
 <div id="tab7" class="tab">
     <textarea id="content7"></textarea><br>
     <div class="button-group">
-        <button onclick="saveContent('content7')">保存</button>
-        <button onclick="loadContent('content7')">読み込み</button>
+        <button onclick="saveContent('content7', 'title7')">保存</button>
+        <input type="text" id="title7" placeholder="タイトルを入力">
+        <button onclick="loadContent('content7', 'title7')">読み込み</button>
     </div>
 </div>
 <div id="tab8" class="tab">
     <textarea id="content8"></textarea><br>
     <div class="button-group">
-        <button onclick="saveContent('content8')">保存</button>
-        <button onclick="loadContent('content8')">読み込み</button>
+        <button onclick="saveContent('content8', 'title8')">保存</button>
+        <input type="text" id="title8" placeholder="タイトルを入力">
+        <button onclick="loadContent('content8', 'title8')">読み込み</button>
     </div>
 </div>
 <div id="tab9" class="tab">
     <textarea id="content9"></textarea><br>
     <div class="button-group">
-        <button onclick="saveContent('content9')">保存</button>
-        <button onclick="loadContent('content9')">読み込み</button>
+        <button onclick="saveContent('content9', 'title9')">保存</button>
+        <input type="text" id="title9" placeholder="タイトルを入力">
+        <button onclick="loadContent('content9', 'title9')">読み込み</button>
     </div>
 </div>
 <div id="tab10" class="tab">
     <textarea id="content10"></textarea><br>
     <div class="button-group">
-        <button onclick="saveContent('content10')">保存</button>
-        <button onclick="loadContent('content10')">読み込み</button>
+        <button onclick="saveContent('content10', 'title10')">保存</button>
+        <input type="text" id="title10" placeholder="タイトルを入力">
+        <button onclick="loadContent('content10', 'title10')">読み込み</button>
     </div>
 </div>
 <script>
@@ -176,26 +199,31 @@
         document.querySelector(`button[onclick="openTab('${tabId}')"]`).classList.add('active');
     }
 
-    function saveContent(contentId) {
+    function saveContent(contentId, titleId) {
         var content = document.getElementById(contentId).value;
+        var title = document.getElementById(titleId).value;
         if (localStorage.getItem(contentId)) {
             if (confirm("既存のデータを上書きしますか？")) {
                 localStorage.setItem(contentId, content);
+                localStorage.setItem(titleId, title);
                 updateButtonStyles();
-                alert("内容が保存されました！");
+                alert("内容とタイトルが保存されました！");
             }
         } else {
             localStorage.setItem(contentId, content);
+            localStorage.setItem(titleId, title);
             updateButtonStyles();
-            alert("内容が保存されました！");
+            alert("内容とタイトルが保存されました！");
         }
     }
 
-    function loadContent(contentId) {
+    function loadContent(contentId, titleId) {
         var content = localStorage.getItem(contentId);
-        if (content) {
-            document.getElementById(contentId).value = content;
-            alert("内容が読み込まれました！");
+        var title = localStorage.getItem(titleId);
+        if (content || title) {
+            document.getElementById(contentId).value = content || "";
+            document.getElementById(titleId).value = title || "";
+            alert("内容とタイトルが読み込まれました！");
         } else {
             alert("保存された内容がありません！");
         }
@@ -205,9 +233,9 @@
         const contentIds = ['content1', 'content2', 'content3', 'content4', 'content5', 'content6', 'content7', 'content8', 'content9', 'content10'];
         contentIds.forEach((contentId, index) => {
             const button = document.querySelector(`button[onclick="openTab('tab${index + 1}')"]`);
-            const content = localStorage.getItem(contentId);
-            button.classList.toggle('saved', !!content);
-            button.title = content ? content.substring(0, 50) + (content.length > 50 ? "..." : "") : "未保存";
+            const title = localStorage.getItem(`title${index + 1}`);
+            button.title = title || "タイトル未設定";
+            button.classList.toggle('saved', !!localStorage.getItem(contentId));
         });
     }
 
