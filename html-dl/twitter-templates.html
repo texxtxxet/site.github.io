@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>xxx</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #D2E2F4;
+      margin: 0;
+      padding: 20px;
+    }
+    .tweet-container {
+      border: 1px solid #ccc;
+      max-width: 600px;
+      margin: auto;
+      border-radius: 12px;
+      padding: 16px;
+      background-color: #fff;
+    }
+    .profile {
+      display: flex;
+      align-items: center;
+    }
+    .profile img {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      margin-right: 10px;
+    }
+    .profile-name {
+      font-weight: bold;
+    }
+    .profile-handle {
+      color: #555;
+      font-size: 14px;
+    }
+    .tweet-text {
+      margin-top: 10px;
+      line-height: 1.6;
+      font-size: 16px;
+    }
+    .translation {
+      color: #1da1f2;
+      font-size: 14px;
+      margin-top: 8px;
+      cursor: pointer;
+    }
+    .translated-text {
+      background-color: #f7f7f7;
+      border-radius: 8px;
+      padding: 10px;
+      margin-top: 6px;
+      font-size: 15px;
+      color: #333;
+      line-height: 1.6;
+    }
+    .tweet-images {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4px;
+      margin-top: 12px;
+    }
+    .tweet-images {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 4px;
+      margin-top: 12px;
+    }
+    .tweet-images img {
+      width: 100%;
+      aspect-ratio: 16 / 9; /* 横長に */
+      object-fit: cover;
+      border-radius: 12px;
+      }
+  </style>
+</head>
+<body>
+  <div class="tweet-container">
+    <div class="profile">
+      <img src="https://pbs.twimg.com/media/GugoHadW4AA3kt-.jpg" alt="profile">
+      <div>
+        <div class="profile-name">xxx</div>
+        <div class="profile-handle">@xxx</div>
+      </div>
+    </div>
+
+    <div class="tweet-text">
+      ---
+    </div>
+    <div class="translation">ポストを翻訳</div>
+    <div class="translated-text">
+      ---
+    </div>
+
+    <div class="tweet-images">
+      <img src="-1.webp" alt="img1">
+      <img src="-2.webp" alt="img2">
+      <img src="-3.webp" alt="img3">
+      <img src="-4.webp" alt="img4">
+    </div>
+
+    <div class="tweet-footer">
+      午後 00:00 · <a href="https://x.com/xxxx5">202x年月日</a>
+    </div>
+
+  </div>
+</body>
+</html>
