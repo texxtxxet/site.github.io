@@ -52,7 +52,7 @@
             position: relative;
             margin-top: 10px;
             word-break: break-all;
-            min-height: 15px; /* 追加: 高さ固定 */
+            min-height: 15px;
             display: flex;
             align-items: center;
         }
@@ -88,7 +88,7 @@
         <button onclick="copyToClipboard('f-command')">Copy</button>
     </div>
 </div>
-<br>
+
 <div class="section">
     <label>🎥 Video Format (例: hls-0000-1)</label><br>
     <input type="text" id="video-format" placeholder="例: hls-0000-1"><br><br>
@@ -100,6 +100,12 @@
     <div class="code-block">
         <code id="download-command"></code>
         <button onclick="copyToClipboard('download-command')">Copy</button>
+    </div>
+
+    <button onclick="generateSubtitleEmbedCommand()">Generate with Japanese Subtitle</button>
+    <div class="code-block">
+        <code id="subtitle-command"></code>
+        <button onclick="copyToClipboard('subtitle-command')">Copy</button>
     </div>
 </div>
 
@@ -121,6 +127,18 @@ function generateDownloadCommand() {
     if(url && video && audio) {
         var command = `C:\\Users\\user\\yt-dlp\\yt-dlp -f "${video}+${audio}" --merge-output-format mp4 -o "${output}" "${url}"`;
         document.getElementById('download-command').textContent = command;
+    }
+}
+
+function generateSubtitleEmbedCommand() {
+    var url = document.getElementById('tver-url').value.trim();
+    var video = document.getElementById('video-format').value.trim();
+    var audio = document.getElementById('audio-format').value.trim();
+    var output = `E:\\Download\\%(title)s.%(ext)s`;
+
+    if(url && video && audio) {
+        var command = `C:\\Users\\user\\yt-dlp\\yt-dlp -f "${video}+${audio}" --write-auto-subs --sub-langs "ja.*" --embed-subs --merge-output-format mp4 -o "${output}" "${url}"`;
+        document.getElementById('subtitle-command').textContent = command;
     }
 }
 
