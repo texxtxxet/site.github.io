@@ -2,7 +2,7 @@
 <html lang="jp">
 <head>
     <meta charset="UTF-8">
-    <title>yt-dlp TVer Version Command Generator</title>
+    <title>yt-dlp Command Generator</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -80,8 +80,8 @@
 <body>
 
 <div class="section">
-    <label>📺 TVer URL</label><br>
-    <input type="text" id="tver-url" placeholder="https://tver.jp/episodes/xxxxxx"><br>
+    <label>📺 URL</label><br>
+    <input type="text" id="tver-url" placeholder="https://xxxxxx"><br>
     <button onclick="generateFCommand()">Generate -F Command</button>
     <div class="code-block">
         <code id="f-command"></code>
@@ -96,7 +96,7 @@
     <label>🔊 Audio Format (例: hls-ts_AUDIO-0_1-xxxx)</label><br>
     <input type="text" id="audio-format" placeholder="例: hls-ts_AUDIO-0_1-xxxx"><br><br>
 
-    <button onclick="generateDownloadCommand()">Generate TVer Download Command</button>
+    <button onclick="generateDownloadCommand()">Generate Download Command</button>
     <div class="code-block">
         <code id="download-command"></code>
         <button onclick="copyToClipboard('download-command')">Copy</button>
