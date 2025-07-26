@@ -158,7 +158,7 @@ function generateSubtitleEmbedCommand() {
     var output = `E:\\Download\\%(title)s.%(ext)s`;
 
     if (url && video && audio) {
-        var command = `C:\\Users\\user\\yt-dlp\\yt-dlp -f "${video}+${audio}" --write-auto-subs --sub-langs "ja.*" --embed-subs --merge-output-format mp4 -o "${output}" "${url}"`;
+        var command = `C:\\Users\\user\\yt-dlp\\yt-dlp -f "${video}+${audio}" --write-auto-subs --sub-langs "ja,ko-ja,en-ja" --embed-subs --merge-output-format mp4 -o "${output}" "${url}"`;
         document.getElementById('subtitle-command').textContent = command;
     }
 }
@@ -168,6 +168,7 @@ function copyToClipboard(id) {
     navigator.clipboard.writeText(text);
 }
 </script>
+
 
 </body>
 </html>
