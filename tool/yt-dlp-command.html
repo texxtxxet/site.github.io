@@ -96,21 +96,18 @@
     <label>🔊 Audio Format (例: hls-ts_AUDIO-0_1-xxxx)</label><br>
     <input type="text" id="audio-format" placeholder="例: hls-ts_AUDIO-0_1-xxxx"><br><br>
 
-    <!-- Title-based output -->
     <button onclick="generateDownloadCommand()">Generate Download Command</button>
     <div class="code-block">
         <code id="download-command"></code>
         <button onclick="copyToClipboard('download-command')">Copy</button>
     </div>
 
-    <!-- ID-based output -->
     <button onclick="generateDownloadCommandWithID()">Generate Download Command (ID filename)</button>
     <div class="code-block">
         <code id="download-command-id"></code>
         <button onclick="copyToClipboard('download-command-id')">Copy</button>
     </div>
 
-    <!-- Subtitle version -->
     <button onclick="generateSubtitleEmbedCommand()">Generate with Japanese Subtitle</button>
     <div class="code-block">
         <code id="subtitle-command"></code>
@@ -122,7 +119,7 @@
 function generateFCommand() {
     var url = document.getElementById('tver-url').value.trim();
     if (url) {
-        var command = C:\\Users\\user\\yt-dlp\\yt-dlp -F "${url}";
+        var command = `"C:\\Users\\user\\yt-dlp\\yt-dlp" -F "${url}"`;
         document.getElementById('f-command').textContent = command;
     }
 }
@@ -131,10 +128,10 @@ function generateDownloadCommand() {
     var url = document.getElementById('tver-url').value.trim();
     var video = document.getElementById('video-format').value.trim();
     var audio = document.getElementById('audio-format').value.trim();
-    var output = E:\\Download\\%(title)s.%(ext)s;
+    var output = "E:\\Download\\%(title)s.%(ext)s";
 
     if (url && video && audio) {
-        var command = C:\\Users\\user\\yt-dlp\\yt-dlp -f "${video}+${audio}" --merge-output-format mp4 -o "${output}" "${url}";
+        var command = `"C:\\Users\\user\\yt-dlp\\yt-dlp" -f "${video}+${audio}" --merge-output-format mp4 -o "${output}" "${url}"`;
         document.getElementById('download-command').textContent = command;
     }
 }
@@ -143,10 +140,10 @@ function generateDownloadCommandWithID() {
     var url = document.getElementById('tver-url').value.trim();
     var video = document.getElementById('video-format').value.trim();
     var audio = document.getElementById('audio-format').value.trim();
-    var output = E:\\Download\\%(id)s.%(ext)s;
+    var output = "E:\\Download\\%(id)s.%(ext)s";
 
     if (url && video && audio) {
-        var command = C:\\Users\\user\\yt-dlp\\yt-dlp -f "${video}+${audio}" --merge-output-format mp4 -o "${output}" "${url}";
+        var command = `"C:\\Users\\user\\yt-dlp\\yt-dlp" -f "${video}+${audio}" --merge-output-format mp4 -o "${output}" "${url}"`;
         document.getElementById('download-command-id').textContent = command;
     }
 }
@@ -155,10 +152,10 @@ function generateSubtitleEmbedCommand() {
     var url = document.getElementById('tver-url').value.trim();
     var video = document.getElementById('video-format').value.trim();
     var audio = document.getElementById('audio-format').value.trim();
-    var output = E:\\Download\\%(title)s.%(ext)s;
+    var output = "E:\\Download\\%(title)s.%(ext)s";
 
     if (url && video && audio) {
-        var command = C:\\Users\\user\\yt-dlp\\yt-dlp -f "${video}+${audio}" --write-auto-subs --sub-langs "ja.*" --embed-subs --merge-output-format mp4 -o "${output}" "${url}";
+        var command = `"C:\\Users\\user\\yt-dlp\\yt-dlp" -f "${video}+${audio}" --write-auto-subs --sub-langs "ja.*" --embed-subs --merge-output-format mp4 -o "${output}" "${url}"`;
         document.getElementById('subtitle-command').textContent = command;
     }
 }
