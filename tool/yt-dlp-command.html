@@ -122,7 +122,7 @@
 function generateFCommand() {
     var url = document.getElementById('tver-url').value.trim();
     if (url) {
-        var command = `C:\\Users\\user\\yt-dlp\\yt-dlp -F "${url}"`;
+        var command = C:\\Users\\user\\yt-dlp\\yt-dlp -F "${url}";
         document.getElementById('f-command').textContent = command;
     }
 }
@@ -131,10 +131,10 @@ function generateDownloadCommand() {
     var url = document.getElementById('tver-url').value.trim();
     var video = document.getElementById('video-format').value.trim();
     var audio = document.getElementById('audio-format').value.trim();
-    var output = `E:\\Download\\%(title)s.%(ext)s`;
+    var output = E:\\Download\\%(title)s.%(ext)s;
 
     if (url && video && audio) {
-        var command = `C:\\Users\\user\\yt-dlp\\yt-dlp -f "${video}+${audio}" --merge-output-format mp4 -o "${output}" "${url}"`;
+        var command = C:\\Users\\user\\yt-dlp\\yt-dlp -f "${video}+${audio}" --merge-output-format mp4 -o "${output}" "${url}";
         document.getElementById('download-command').textContent = command;
     }
 }
@@ -143,10 +143,10 @@ function generateDownloadCommandWithID() {
     var url = document.getElementById('tver-url').value.trim();
     var video = document.getElementById('video-format').value.trim();
     var audio = document.getElementById('audio-format').value.trim();
-    var output = `E:\\Download\\%(id)s.%(ext)s`;
+    var output = E:\\Download\\%(id)s.%(ext)s;
 
     if (url && video && audio) {
-        var command = `C:\\Users\\user\\yt-dlp\\yt-dlp -f "${video}+${audio}" --merge-output-format mp4 -o "${output}" "${url}"`;
+        var command = C:\\Users\\user\\yt-dlp\\yt-dlp -f "${video}+${audio}" --merge-output-format mp4 -o "${output}" "${url}";
         document.getElementById('download-command-id').textContent = command;
     }
 }
@@ -155,10 +155,10 @@ function generateSubtitleEmbedCommand() {
     var url = document.getElementById('tver-url').value.trim();
     var video = document.getElementById('video-format').value.trim();
     var audio = document.getElementById('audio-format').value.trim();
-    var output = `E:\\Download\\%(title)s.%(ext)s`;
+    var output = E:\\Download\\%(title)s.%(ext)s;
 
     if (url && video && audio) {
-        var command = `C:\\Users\\user\\yt-dlp\\yt-dlp -f "${video}+${audio}" --write-auto-subs --sub-langs "ja,ko-ja,en-ja" --embed-subs --merge-output-format mp4 -o "${output}" "${url}"`;
+        var command = C:\\Users\\user\\yt-dlp\\yt-dlp -f "${video}+${audio}" --write-auto-subs --sub-langs "ja.*" --embed-subs --merge-output-format mp4 -o "${output}" "${url}";
         document.getElementById('subtitle-command').textContent = command;
     }
 }
@@ -168,7 +168,6 @@ function copyToClipboard(id) {
     navigator.clipboard.writeText(text);
 }
 </script>
-
 
 </body>
 </html>
