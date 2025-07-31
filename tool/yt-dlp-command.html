@@ -28,6 +28,7 @@
         input[type="text"] {
             padding: 8px;
             width: 80%;
+            margin-top: 5px;
             margin-bottom: 10px;
             border: 1px solid #ccc;
             border-radius: 5px;
@@ -40,6 +41,7 @@
             border-radius: 5px;
             cursor: pointer;
             margin-top: 5px;
+            margin-right: 5px;
         }
         button:hover {
             background-color: #45a049;
@@ -75,96 +77,131 @@
         .code-block button:hover {
             background-color: #45a049;
         }
+        .format-buttons {
+            margin: 8px 0 10px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+        .format-buttons button {
+            font-size: 12px;
+            padding: 4px 8px;
+            background-color: #BD97F7;
+            color: #333;
+            border: 1px solid #bbb;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+        .format-buttons button:hover {
+            background-color: #d5d5d5;
+        }
     </style>
 </head>
 <body>
 
-<div class="section">
-    <label>📺 URL</label><br>
-    <input type="text" id="tver-url" placeholder="https://xxxxxx"><br>
-    <button onclick="generateFCommand()">Generate -F Command</button>
-    <div class="code-block">
-        <code id="f-command"></code>
-        <button onclick="copyToClipboard('f-command')">Copy</button>
-    </div>
-</div>
-
-<div class="section">
-    <label>🎥 Video Format (例: hls-0000-1)</label><br>
-    <input type="text" id="video-format" placeholder="例: hls-0000-1"><br><br>
-
-    <label>🔊 Audio Format (例: hls-ts_AUDIO-0_1-xxxx)</label><br>
-    <input type="text" id="audio-format" placeholder="例: hls-ts_AUDIO-0_1-xxxx"><br><br>
-
-    <button onclick="generateDownloadCommand()">Generate Download Command</button>
-    <div class="code-block">
-        <code id="download-command"></code>
-        <button onclick="copyToClipboard('download-command')">Copy</button>
+    <div class="section">
+        <label>📺 URL</label><br>
+        <input type="text" id="tver-url" placeholder="https://xxxxxx"><br>
+        <button onclick="generateFCommand()">Generate -F Command</button>
+        <div class="code-block">
+            <code id="f-command"></code>
+            <button onclick="copyToClipboard('f-command')">Copy</button>
+        </div>
     </div>
 
-    <button onclick="generateDownloadCommandWithID()">Generate Download Command (ID filename)</button>
-    <div class="code-block">
-        <code id="download-command-id"></code>
-        <button onclick="copyToClipboard('download-command-id')">Copy</button>
+    <div class="section">
+        <label>🔊 Audio Format</label><br>
+        <div class="format-buttons">
+            <button onclick="setAudio('140')">140（YouTube）</button>
+            <button onclick="setAudio('hls-audio-128000-Audio')">hls-audio-128000-Audio（Twitter）</button>
+        </div>
+        <input type="text" id="audio-format" placeholder=""><br><br>
+
+        <label>🎥 Video Format</label><br>
+        <div class="format-buttons">
+            <button onclick="setVideo('136')">136（720p）</button>
+            <button onclick="setVideo('137')">137（1080p）</button>
+        </div>
+        <input type="text" id="video-format" placeholder=""><br><br>
+
+        <button onclick="generateDownloadCommand()">Generate Download Command</button>
+        <div class="code-block">
+            <code id="download-command"></code>
+            <button onclick="copyToClipboard('download-command')">Copy</button>
+        </div>
+
+        <button onclick="generateDownloadCommandWithID()">Generate Download Command (ID filename)</button>
+        <div class="code-block">
+            <code id="download-command-id"></code>
+            <button onclick="copyToClipboard('download-command-id')">Copy</button>
+        </div>
+
+        <button onclick="generateSubtitleEmbedCommand()">Generate with Japanese Subtitle</button>
+        <div class="code-block">
+            <code id="subtitle-command"></code>
+            <button onclick="copyToClipboard('subtitle-command')">Copy</button>
+        </div>
     </div>
 
-    <button onclick="generateSubtitleEmbedCommand()">Generate with Japanese Subtitle</button>
-    <div class="code-block">
-        <code id="subtitle-command"></code>
-        <button onclick="copyToClipboard('subtitle-command')">Copy</button>
-    </div>
-</div>
+    <script>
+        function setAudio(value) {
+            document.getElementById('audio-format').value = value;
+        }
 
-<script>
-function generateFCommand() {
-    var url = document.getElementById('tver-url').value.trim();
-    if (url) {
-        var command = `"C:\\Users\\user\\yt-dlp\\yt-dlp" -F "${url}"`;
-        document.getElementById('f-command').textContent = command;
-    }
-}
+        function setVideo(value) {
+            document.getElementById('video-format').value = value;
+        }
 
-function generateDownloadCommand() {
-    var url = document.getElementById('tver-url').value.trim();
-    var video = document.getElementById('video-format').value.trim();
-    var audio = document.getElementById('audio-format').value.trim();
-    var output = "E:\\Download\\%(title)s.%(ext)s";
+        function generateFCommand() {
+            var url = document.getElementById('tver-url').value.trim();
+            if (url) {
+                var command = `"C:\\Users\\user\\yt-dlp\\yt-dlp" -F "${url}"`;
+                document.getElementById('f-command').textContent = command;
+            }
+        }
 
-    if (url && video && audio) {
-        var command = `"C:\\Users\\user\\yt-dlp\\yt-dlp" -f "${video}+${audio}" --merge-output-format mp4 -o "${output}" "${url}"`;
-        document.getElementById('download-command').textContent = command;
-    }
-}
+        function generateDownloadCommand() {
+            var url = document.getElementById('tver-url').value.trim();
+            var video = document.getElementById('video-format').value.trim();
+            var audio = document.getElementById('audio-format').value.trim();
+            var output = "E:\\Download\\%(title)s.%(ext)s";
 
-function generateDownloadCommandWithID() {
-    var url = document.getElementById('tver-url').value.trim();
-    var video = document.getElementById('video-format').value.trim();
-    var audio = document.getElementById('audio-format').value.trim();
-    var output = "E:\\Download\\%(id)s.%(ext)s";
+            if (url && video && audio) {
+                var command = `"C:\\Users\\user\\yt-dlp\\yt-dlp" -f "${video}+${audio}" --merge-output-format mp4 -o "${output}" "${url}"`;
+                document.getElementById('download-command').textContent = command;
+            }
+        }
 
-    if (url && video && audio) {
-        var command = `"C:\\Users\\user\\yt-dlp\\yt-dlp" -f "${video}+${audio}" --merge-output-format mp4 -o "${output}" "${url}"`;
-        document.getElementById('download-command-id').textContent = command;
-    }
-}
+        function generateDownloadCommandWithID() {
+            var url = document.getElementById('tver-url').value.trim();
+            var video = document.getElementById('video-format').value.trim();
+            var audio = document.getElementById('audio-format').value.trim();
+            var output = "E:\\Download\\%(id)s.%(ext)s";
 
-function generateSubtitleEmbedCommand() {
-    var url = document.getElementById('tver-url').value.trim();
-    var video = document.getElementById('video-format').value.trim();
-    var audio = document.getElementById('audio-format').value.trim();
-    var output = "E:\\Download\\%(title)s.%(ext)s";
+            if (url && video && audio) {
+                var command = `"C:\\Users\\user\\yt-dlp\\yt-dlp" -f "${video}+${audio}" --merge-output-format mp4 -o "${output}" "${url}"`;
+                document.getElementById('download-command-id').textContent = command;
+            }
+        }
 
-    if (url && video && audio) {
-        var command = `"C:\\Users\\user\\yt-dlp\\yt-dlp" -f "${video}+${audio}" --write-auto-subs --sub-langs "ja.*" --embed-subs --merge-output-format mp4 -o "${output}" "${url}"`;
-        document.getElementById('subtitle-command').textContent = command;
-    }
-}
+        function generateSubtitleEmbedCommand() {
+            var url = document.getElementById('tver-url').value.trim();
+            var video = document.getElementById('video-format').value.trim();
+            var audio = document.getElementById('audio-format').value.trim();
+            var output = "E:\\Download\\%(title)s.%(ext)s";
 
-function copyToClipboard(id) {
-    var text = document.getElementById(id).textContent;
-    navigator.clipboard.writeText(text);
-}
-</script>
+            if (url && video && audio) {
+                var command = `"C:\\Users\\user\\yt-dlp\\yt-dlp" -f "${video}+${audio}" --write-auto-subs --sub-langs "ja.*" --embed-subs --merge-output-format mp4 -o "${output}" "${url}"`;
+                document.getElementById('subtitle-command').textContent = command;
+            }
+        }
+
+        function copyToClipboard(id) {
+            var text = document.getElementById(id).textContent;
+            navigator.clipboard.writeText(text);
+        }
+    </script>
 
 </body>
 </html>
