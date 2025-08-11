@@ -112,7 +112,7 @@
     .comment {
       background: #fff;
       padding: 1px 18px;
-      margin-bottom: 15px;
+      margin-bottom: 8px; /* コメント間の余白 */
       border-radius: 8px;
       box-shadow: 0 2px 5px rgba(0,0,0,0.04);
       transition: transform 0.2s ease, box-shadow 0.2s ease;
@@ -120,6 +120,13 @@
     .comment:hover {
       transform: translateY(-2px);
       box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    }
+
+    /* コメント本文の余白削除＋インデント */
+    .comment-content {
+      padding-left: 2em; /* インデント幅 */
+      margin: 0;         /* 上下余白削除 */
+      line-height: 1.5; /* 少し詰める */
     }
 
     @media (prefers-color-scheme: dark) {
