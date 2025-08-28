@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<title>朝マック クイズ</title>
+<style>
+body { font-family: "Segoe UI", sans-serif; margin:0; background:#fff8e6; }
+header { background:#ff9800; color:white; text-align:center; padding:1rem; font-size:1.5rem; font-weight:bold; }
+.container { display:flex; height:calc(100vh - 80px); }
+.choices { flex:1; background:#fff3e0; padding:1rem; overflow-y:auto; border-right:3px solid #eee; }
+.choices h3 { margin-top:1rem; margin-bottom:0.5rem; border-bottom:2px solid #ff9800; display:inline-block; padding-bottom:2px; }
+.choices button { display:block; width:95%; margin:0.25rem auto; padding:0.5rem; background:white; border:2px solid #ff9800; border-radius:8px; cursor:pointer; transition:0.2s; }
+.choices button:hover { background:#ffe0b2; }
+.quiz-area { flex:2; padding:1.5rem; overflow-y:auto; }
+.quiz-area h2 { margin-bottom:1rem; }
+.stack-area { margin:1rem 0; min-height:120px; padding:1rem; border:2px dashed #aaa; border-radius:8px; background:#fff; }
+.stack-item { padding:4px 8px; margin:4px 0; background:#ffffe0; border:1px solid #ccc; border-radius:4px; }
+.controls { margin-top:1rem; }
+.controls button { margin-right:0.5rem; padding:0.5rem 1rem; border:none; border-radius:6px; cursor:pointer; font-weight:bold; }
+.btn-check { background:#4caf50; color:white; }
+.btn-reset { background:#ff9800; color:white; }
+.btn-undo { background:#ffa000; color:white; }
+.result { margin-top:1rem; padding:1rem; border-radius:8px; }
+.correct { background:#e0ffe0; border:2px solid #4caf50; }
+.wrong { background:#ffe0e0; border:2px solid #d61c1c; }
+.result img { max-width:200px; margin-top:1rem; display:block; }
+.answer-list { margin-top:1rem; background:#f8f8f8; padding:0.5rem; border-radius:6px; }
+</style>
+</head>
+<body>
+<header>☀️ 朝マック クイズ ☀️</header>
+<div class="container">
+  <div class="choices" id="choices"></div>
+  <div class="quiz-area">
+    <h2 id="question">朝マックを作ろう！</h2>
+    <div class="stack-area" id="stack">正しい順に具材を積み上げて完成させよう！</div>
+    <div class="controls">
+      <button class="btn-check" onclick="checkAnswer()">回答する</button>
+      <button class="btn-undo" onclick="undoChoice()">戻る</button>
+      <button class="btn-reset" onclick="resetQuiz()">リセット</button>
+    </div>
+    <div id="result" class="result"></div>
+  </div>
+</div>
+
+<script>
+const burgers = {
+  "メガマフィン": ["マフィン（クラウン）","ケチャップ","スモークベーコン","エッグ","ソーセージパティ","スライスチーズ","ソーセージパティ","マフィン（ヒール）"],
+  "ソーセージエッグマフィン": ["マフィン（クラウン）","エッグ","ソーセージパティ","スライスチーズ","マフィン（ヒール）"],
+  "エッグマックマフィン": ["マフィン（クラウン）","カナディアンベーコン","エッグ","スライスチーズ","マフィン（ヒール）"],
+  "チキンマックマフィン": ["マフィン（クラウン）","マックチキンパティ","スライスレタス","イエローマスタード","マフィン（ヒール）"],
+  "ソーセージマフィン": ["マフィン（クラウン）","ソーセージパティ","スライスチーズ","マフィン（ヒール）"],
+  "フィレオフィッシュ": ["レギュラーバンズ（クラウン）","タルタルソース","フィッシュポーション","ハーフチーズ","レギュラーバンズ（ヒール）"],
+  "ベーコンエッグマックサンド": ["レギュラーバンズ（クラウン）","スモークベーコン","スライスチーズ","エッグ","レギュラーバンズ（ヒール）"],
+  "マックグリドル ソーセージエッグ": ["グリドルケーキ（クラウン）","エッグ","ソーセージパティ","スライスチーズ","グリドルケーキ（ヒール）"],
+  "マックグリドル ベーコンエッグ": ["グリドルケーキ（クラウン）","エッグ","スモークベーコン","スライスチーズ","グリドルケーキ（ヒール）"],
+  "マックグリドル ソーセージ": ["グリドルケーキ（クラウン）","ソーセージパティ","グリドルケーキ（ヒール）"]
+};
+
+// 画像ファイル名（仮）
+const burgerImages = {
+  "メガマフィン": "megamuffin.webp",
+  "ソーセージエッグマフィン": "sausageegg.webp",
+  "エッグマックマフィン": "eggmuffin.webp",
+  "チキンマックマフィン": "chickenmuffin.webp",
+  "ソーセージマフィン": "sausagemuffin.webp",
+  "フィレオフィッシュ": "fileofish.webp",
+  "ベーコンエッグマックサンド": "bacon_egg.webp",
+  "マックグリドル ソーセージエッグ": "griddle_sausageegg.webp",
+  "マックグリドル ベーコンエッグ": "griddle_baconegg.webp",
+  "マックグリドル ソーセージ": "griddle_sausage.webp"
+};
+
+const ingredients = {
+  "バンズ類":["マフィン（クラウン）","マフィン（ヒール）","レギュラーバンズ（クラウン）","レギュラーバンズ（ヒール）","グリドルケーキ（クラウン）","グリドルケーキ（ヒール）"],
+  "ソース系":["ケチャップ","タルタルソース","イエローマスタード"],
+  "パティ類":["ソーセージパティ","マックチキンパティ","フィッシュポーション"],
+  "具材":["スモークベーコン","カナディアンベーコン","エッグ","スライスレタス","スライスチーズ","ハーフチーズ"]
+};
+
+let currentBurger, answer=[], attempts=0;
+
+function loadChoices() {
+  const choicesDiv = document.getElementById("choices");
+  choicesDiv.innerHTML="";
+  for(let cat in ingredients){
+    let h3=document.createElement("h3");
+    h3.textContent=cat;
+    choicesDiv.appendChild(h3);
+    ingredients[cat].forEach(item=>{
+      let btn=document.createElement("button");
+      btn.textContent=item;
+      btn.onclick=()=>addToStack(item);
+      choicesDiv.appendChild(btn);
+    });
+  }
+}
+
+function resetQuiz() {
+  const names=Object.keys(burgers);
+  currentBurger=names[Math.floor(Math.random()*names.length)];
+  document.getElementById("question").textContent=`「${currentBurger}」を作ろう！`;
+  document.getElementById("stack").innerHTML="正しい順に具材を積み上げて完成させよう！";
+  document.getElementById("result").innerHTML="";
+  answer=[];
+  attempts=0;
+}
+
+function addToStack(item){
+  answer.push(item);
+  const div=document.createElement("div");
+  div.className="stack-item";
+  div.textContent=item;
+  document.getElementById("stack").appendChild(div);
+}
+
+function undoChoice(){
+  if(answer.length>0){
+    answer.pop();
+    const stack=document.getElementById("stack");
+    stack.removeChild(stack.lastChild);
+  }
+}
+
+function checkAnswer(){
+  attempts++;
+  const correct=burgers[currentBurger];
+  const resultDiv=document.getElementById("result");
+  resultDiv.innerHTML="";
+
+  let img=document.createElement("img");
+  img.src=`img/${burgerImages[currentBurger] || "default.webp"}`;
+
+  if(JSON.stringify(answer)===JSON.stringify(correct)){
+    resultDiv.className="result correct";
+    resultDiv.innerHTML="✅ 正解！";
+    resultDiv.appendChild(img);
+  } else {
+    resultDiv.className="result wrong";
+    resultDiv.innerHTML=`❌ 不正解！（${attempts}回目）`;
+    resultDiv.appendChild(img);
+    let ansDiv=document.createElement("div");
+    ansDiv.className="answer-list";
+    ansDiv.innerHTML="<b>正しい順:</b><br>"+correct.join(" → ");
+    resultDiv.appendChild(ansDiv);
+  }
+}
+
+loadChoices();
+resetQuiz();
+</script>
+</body>
+</html>

@@ -1,0 +1,503 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>レギュラーメニューのドリル</title>
+  <style>
+    :root {
+      --bg: #0b1020;      /* 背景色を一色に統一（必要なら変更OK） */
+      --card: #121a33;
+      --muted: #96a0c6;
+      --text: #e8edff;
+      --accent: #8fb3ff;
+      --ok: #2ecc71;
+      --ng: #ff6b6b;
+      --warn: #ffb86b;
+    }
+    * { box-sizing: border-box; }
+    html, body { height: 100%; }
+    body {
+      margin: 0;
+      background: var(--bg); /* 単色背景 */
+      color: var(--text);
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, "Hiragino Kaku Gothic ProN", Meiryo, sans-serif;
+      line-height: 1.5;
+    }
+    header { padding: 20px; text-align: center; }
+    header h1 { margin: 0 0 6px; font-size: 24px; letter-spacing: .03em; }
+    header p { margin: 0; color: var(--muted); font-size: 14px; }
+
+    .wrap {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 16px;
+      display: grid;
+      gap: 16px;
+      grid-template-columns: 1fr;
+    }
+    @media (min-width: 768px) {
+      .wrap { grid-template-columns: 320px 1fr; }
+    }
+
+    .card {
+      background: linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.01));
+      border: 1px solid rgba(255,255,255,.08);
+      box-shadow: 0 12px 30px rgba(0,0,0,.35);
+      border-radius: 16px;
+      overflow: hidden;
+    }
+    .card h2 { margin: 0; font-size: 16px; padding: 14px 16px; background: rgba(255,255,255,.04); border-bottom: 1px solid rgba(255,255,255,.08); }
+    .card .body { padding: 14px; }
+
+    select, button, .pill {
+      appearance: none;
+      border: 1px solid rgba(255,255,255,.18);
+      background: rgba(255,255,255,.06);
+      color: var(--text);
+      padding: 10px 12px;
+      border-radius: 12px;
+      font-size: 14px;
+    }
+
+    /* プルダウンの見やすさ修正 */
+    select {
+      width: 100%;
+      color: #000;            /* 黒文字 */
+      background: #fff;       /* 白背景 */
+      border: 1px solid #ccc;
+      border-radius: 8px;
+    }
+
+    button {
+      cursor: pointer;
+      transition: transform .05s ease, background .15s ease, border-color .15s;
+    }
+    button:hover { transform: translateY(-1px); }
+    button:active { transform: translateY(0); }
+
+    .toolbar { display: flex; flex-direction: column; gap: 10px; }
+    .btn-row { display: flex; flex-direction: column; gap: 8px; }
+    @media (min-width: 520px) {
+      .btn-row { flex-direction: row; flex-wrap: wrap; }
+    }
+
+    .options { display: flex; flex-wrap: wrap; gap: 8px; }
+    .pill { user-select: none; cursor: pointer; }
+    .pill[disabled] { opacity: .35; cursor: not-allowed; }
+
+    .stack {
+      min-height: 400px; display: flex; flex-direction: column; gap: 10px; justify-content: flex-start; align-items: stretch;
+      background: repeating-linear-gradient(180deg, rgba(255,255,255,.02) 0 8px, rgba(255,255,255,.01) 8px 16px);
+      border: 1px dashed rgba(255,255,255,.18); border-radius: 16px; padding: 16px; position: relative;
+    }
+    .stack::before, .stack::after {
+      position: absolute; left: 12px; color: var(--muted); font-size: 12px; letter-spacing: .04em;
+    }
+    .stack::before { content: "TOP"; top: 8px; }
+    .stack::after { content: "BOTTOM"; bottom: 8px; }
+
+    .layer { padding: 10px 12px; border-radius: 12px; border: 1px solid rgba(255,255,255,.18); background: rgba(255,255,255,.07); display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+    .layer small { color: var(--muted); }
+
+    .layer.ok { border-color: rgba(46,204,113,.6); box-shadow: 0 0 0 2px rgba(46,204,113,.15) inset; }
+    .layer.ng { border-color: rgba(255,107,107,.6); box-shadow: 0 0 0 2px rgba(255,107,107,.12) inset; }
+
+    .status { font-size: 14px; padding: 12px; border-radius: 12px; }
+    .status.ok { background: rgba(46,204,113,.12); border: 1px solid rgba(46,204,113,.35); }
+    .status.ng { background: rgba(255,107,107,.12); border: 1px solid rgba(255,107,107,.35); }
+    .status.hint { background: rgba(255,184,107,.12); border: 1px solid rgba(255,184,107,.35); }
+
+    .kbd { padding: 2px 6px; border-radius: 6px; border: 1px solid rgba(255,255,255,.2); font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; background: rgba(255,255,255,.06); font-size: 12px; }
+
+    .flex { display: flex; gap: 8px; align-items: center; }
+    .space { height: 6px; }
+  </style>
+</head>
+<body>
+
+<main class="wrap">
+  <section class="card">
+    <h2>ハンバーガー 選択・操作</h2>
+    <div class="body">
+      <div class="toolbar">
+        <label>
+          <span class="space"></span>
+          <select id="burgerSelect" aria-label="バーガーを選択">
+            <!-- options injected -->
+          </select>
+        </label>
+        <div class="btn-row">
+          <button id="btnCheck">チェック</button>
+          <button id="btnUndo">一手戻す</button>
+          <button id="btnReset">リセット</button>
+        </div>
+        <div class="btn-row">
+          <button id="btnHint">ヒント（次の正解を示す）</button>
+          <button id="btnAuto">自動配置</button>
+          <button id="btnReveal">正解を表示／非表示</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="card">
+    <h2>選択肢（クリックで追加）</h2>
+    <div class="body">
+      <div id="options" class="options" aria-live="polite"></div>
+    </div>
+  </section>
+
+  <section class="card" style="grid-column: 1 / -1;">
+    <h2>あなたのスタック</h2>
+    <div class="body">
+      <div id="stack" class="stack" aria-live="polite"></div>
+      <div id="status" class="status hint" style="margin-top: 12px;">バーガーを選んで、上から順に置いていこう。</div>
+    </div>
+  </section>
+</main>
+
+<script>
+  // ====== データ定義（上→下の順） ======
+  const BURGERS = {
+    "ハンバーガー": [
+      "レギュラーバンズ（クラウン）",
+      "マスタード",
+      "ケチャップ",
+      "オニオン",
+      "ピクルス",
+      "10:1パティ",
+      "レギュラーバンズ（ヒール）"
+    ],
+    "チーズバーガー": [
+      "レギュラーバンズ（クラウン）",
+      "マスタード",
+      "ケチャップ",
+      "オニオン",
+      "ピクルス",
+      "スライスチーズ",
+      "10:1パティ",
+      "レギュラーバンズ（ヒール）"
+    ],
+    "マックチキン": [
+      "セサミバンズ（クラウン）",
+      "スイートレモンソース",
+      "シュレッドレタス",
+      "マックチキンパティ",
+      "セサミバンズ（ヒール）"
+    ],
+    "スパチキ（スパイシーマックチキン）": [
+      "セサミバンズ（クラウン）",
+      "スパイシーソース",
+      "シュレッドレタス",
+      "マックチキンパティ",
+      "セサミバンズ（ヒール）"
+    ],
+    "チキチー（マックチキンチーズ）": [
+      "セサミバンズ（クラウン）",
+      "スイートレモンソース",
+      "シュレッドレタス",
+      "マックチキンパティ",
+      "スライスチーズ",
+      "セサミバンズ（ヒール）"
+    ],
+    "エグチ（エッグチーズバーガー）": [
+      "レギュラーバンズ（クラウン）",
+      "マスタード",
+      "ケチャップ",
+      "オニオン",
+      "ピクルス",
+      "エッグ",
+      "スライスチーズ",
+      "10:1パティ",
+      "レギュラーバンズ（ヒール）"
+    ],
+    "フィレオフィッシュ": [
+      "レギュラーバンズ（クラウン）",
+      "タルタルソース",
+      "フィッシュポーション",
+      "ハーフチーズ",
+      "レギュラーバンズ（ヒール）"
+    ],
+    "てりやきマックバーガー": [
+      "セサミバンズ（クラウン）",
+      "スイートレモンソース",
+      "スライスレタス",
+      "てりやきパティ",
+      "てりやきソース",
+      "セサミバンズ（ヒール）"
+    ],
+    "ベーコンレタスバーガー": [
+      "セサミバンズ（クラウン）",
+      "イエローマスタード",
+      "オニオン",
+      "スライスレタス",
+      "スライスチーズ",
+      "スモークベーコン",
+      "10:1パティ",
+      "セサミバンズ（ヒール）"
+    ],
+    "チキンフィレオ": [
+      "セサミバンズ（クラウン）",
+      "オーロラソース",
+      "オニオン",
+      "スライスレタス",
+      "チキンパティ",
+      "セサミバンズ（ヒール）"
+    ],
+    "てりやきチキンフィレオ": [
+      "セサミバンズ（クラウン）",
+      "スイートレモンソース",
+      "スライスレタス",
+      "チキンパティ",
+      "てりやきソース",
+      "セサミバンズ（ヒール）"
+    ],
+    "えびフィレオ": [
+      "セサミバンズ（クラウン）",
+      "オーロラソース",
+      "オニオン",
+      "スライスレタス",
+      "シュリンプポーション",
+      "マスタード",
+      "セサミバンズ（ヒール）"
+    ],
+    "ダブルチーズバーガー": [
+      "レギュラーバンズ（クラウン）",
+      "マスタード",
+      "ケチャップ",
+      "オニオン",
+      "ピクルス（2枚）",
+      "スライスチーズ",
+      "10:1パティ",
+      "スライスチーズ",
+      "10:1パティ",
+      "レギュラーバンズ（ヒール）"
+    ],
+    "ビッグマック": [
+      "ビッグマックバンズ（クラウン）",
+      "10:1パティ",
+      "ピクルス（2枚）",
+      "シュレッドレタス",
+      "オニオン",
+      "ビッグマックソース",
+      "ビッグマックバンズ（クラブ）",
+      "10:1パティ",
+      "スライスチーズ",
+      "シュレッドレタス",
+      "オニオン",
+      "ビッグマックソース",
+      "ビッグマックバンズ（ヒール）"
+    ],
+    "炙り醤油風 たまごベーコン肉厚ビーフ": [
+      "ポピーシードバンズ（クラウン）",
+      "炙り醤油風ソース",
+      "オニオン",
+      "スライスレタス",
+      "スモークベーコン",
+      "エッグ",
+      "6:1パティ",
+      "ホワイトチェダーチーズ",
+      "炙り醤油風ソース",
+      "ポピーシードバンズ（ヒール）"
+    ],
+    "炙り醤油風 ダブル肉厚ビーフ": [
+      "ポピーシードバンズ（クラウン）",
+      "炙り醤油風ソース",
+      "オニオン",
+      "スライスチーズ",
+      "6:1パティ",
+      "スライスチーズ",
+      "6:1パティ",
+      "炙り醤油風ソース",
+      "ポピーシードバンズ（ヒール）"
+    ]
+  };
+
+// ====== ユーティリティ ======
+const $ = (sel) => document.querySelector(sel);
+const $$ = (sel) => Array.from(document.querySelectorAll(sel));
+const shuffle = (arr) => arr.map(v=>[Math.random(), v]).sort((a,b)=>a[0]-b[0]).map(([,v])=>v);
+
+// ====== 状態 ======
+let currentKey = Object.keys(BURGERS)[0];
+let target = [...BURGERS[currentKey]];
+let stack = [];
+let reveal = false;
+
+// ====== 初期化 ======
+function initSelect() {
+  const sel = $('#burgerSelect');
+  sel.innerHTML = Object.keys(BURGERS).map(k => `<option value="${k}">${k}</option>`).join('');
+  sel.value = currentKey;
+  sel.addEventListener('change', () => {
+    currentKey = sel.value;
+    loadBurger(currentKey);
+  });
+}
+
+// ====== バーガー読み込み ======
+function loadBurger(key) {
+  target = [...BURGERS[key]];          // 上→下の順
+  stack = [];
+  reveal = false;
+  renderOptions();
+  renderStack();
+  setStatus('バーガーを選んで、上から順に置いていこう。', 'hint');
+}
+
+// ====== 選択肢レンダリング ======
+function renderOptions() {
+  const box = $('#options');
+  box.innerHTML = '';
+
+  // 具材ごとの必要数をカウント
+  const counts = {};
+  target.forEach(label => counts[label] = (counts[label] || 0) + 1);
+
+  Object.keys(counts).forEach(label => {
+    const maxCount = counts[label];                 // 必要数
+    const usedCount = stack.filter(v => v === label).length; // 既に置いた数
+    const remaining = maxCount - usedCount;
+
+    for (let i = 0; i < remaining; i++) {
+      const btn = document.createElement('button');
+      btn.className = 'pill';
+      btn.textContent = label;
+      btn.addEventListener('click', () => addLayer(label));
+      box.appendChild(btn);
+    }
+  });
+}
+
+// ====== スタックレンダリング ======
+function renderStack(mark = []) {
+  const s = $('#stack');
+  s.innerHTML = '';
+  stack.forEach((label, i) => {
+    const row = document.createElement('div');
+    row.className = 'layer';
+    if (mark[i] === true) row.classList.add('ok');
+    if (mark[i] === false) row.classList.add('ng');
+
+    const left = document.createElement('div');
+    left.textContent = label;
+
+    const right = document.createElement('div');
+    right.className = 'flex';
+    const idx = document.createElement('small');
+    idx.textContent = `${i+1}/${target.length}`;
+    const del = document.createElement('button');
+    del.textContent = '×';
+    del.addEventListener('click', () => removeAt(i));
+    right.append(idx, del);
+
+    row.append(left, right);
+    s.appendChild(row);
+  });
+
+  if (reveal) {
+    target.forEach((label, i) => {
+      if (i >= stack.length) {
+        const ghost = document.createElement('div');
+        ghost.className = 'layer';
+        ghost.style.opacity = .45;
+        ghost.innerHTML = `<span>${label}</span><small>${i+1}/${target.length}</small>`;
+        s.appendChild(ghost);
+      }
+    });
+  }
+}
+
+// ====== 操作 ======
+function addLayer(label) {
+  stack.push(label);
+  renderOptions();
+  renderStack();
+}
+function removeAt(index) {
+  stack.splice(index, 1);
+  renderOptions();
+  renderStack();
+}
+function undo() {
+  stack.pop();
+  renderOptions();
+  renderStack();
+}
+function resetAll() { loadBurger(currentKey); }
+
+// ====== チェック ======
+function check() {
+  if (stack.length === 0) {
+    setStatus('まずは1枚置いてみよう！', 'hint');
+    return;
+  }
+  const marks = stack.map((v, i) => v === target[i]);
+  renderStack(marks);
+  const allPlaced = stack.length === target.length;
+  const allCorrect = marks.every(Boolean) && allPlaced;
+  if (allCorrect) {
+    setStatus('🎉 正解！完璧な重ね方！', 'ok');
+  } else if (!allPlaced) {
+    const nextNeed = target[stack.length];
+    setStatus(`まだ途中。次は <b>${nextNeed}</b>`, 'hint');
+  } else {
+    setStatus(`順番違いがあるよ。`, 'ng');
+  }
+}
+
+// ====== ヒント・自動配置 ======
+function hint() {
+  const idx = stack.length;
+  if (idx >= target.length) { setStatus('全て配置済み。チェックしてね。', 'hint'); return; }
+  const next = target[idx];
+  highlightOption(next);
+  setStatus(`ヒント：次は <b>${next}</b>`, 'hint');
+}
+
+function autoPlaceOne() {
+  const idx = stack.length;
+  if (idx >= target.length) return;
+  const next = target[idx];
+  addLayer(next);
+  setStatus(`1枚自動配置：<b>${next}</b>`, 'hint');
+}
+
+function toggleReveal() {
+  reveal = !reveal;
+  renderStack();
+  setStatus(reveal ? '正解ガイドを表示中' : '正解ガイドを非表示', 'hint');
+}
+
+function highlightOption(text) {
+  $$('#options .pill').forEach(el => {
+    el.style.outline = (el.textContent === text) ? '2px solid var(--warn)' : 'none';
+  });
+  setTimeout(() => $$('#options .pill').forEach(el => el.style.outline = 'none'), 1600);
+}
+
+// ====== ステータス ======
+function setStatus(html, kind='hint') {
+  const box = $('#status');
+  box.className = `status ${kind}`;
+  box.innerHTML = html;
+}
+
+// ====== ボタンバインド ======
+function bind() {
+  $('#btnCheck').addEventListener('click', check);
+  $('#btnUndo').addEventListener('click', undo);
+  $('#btnReset').addEventListener('click', resetAll);
+  $('#btnHint').addEventListener('click', hint);
+  $('#btnAuto').addEventListener('click', autoPlaceOne);
+  $('#btnReveal').addEventListener('click', toggleReveal);
+}
+
+// ====== 初期化 ======
+initSelect();
+bind();
+loadBurger(currentKey);
+</script>
+</body>
+</html>

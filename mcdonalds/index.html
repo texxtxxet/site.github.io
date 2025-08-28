@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>マクドナルド クイズ＆ドリル</title>
+    <style>
+        body {
+            font-family: "Segoe UI", sans-serif;
+            margin: 0;
+            background: #f8f5ef;
+            color: #333;
+        }
+        header {
+            background: #d61c1c;
+            color: white;
+            text-align: center;
+            padding: 1.5rem;
+            font-size: 2rem;
+            font-weight: bold;
+        }
+        .container {
+            max-width: 800px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
+        h2 {
+            color: #d61c1c;
+            border-bottom: 2px solid #d61c1c;
+            padding-bottom: 0.5rem;
+            margin-bottom: 1rem;
+        }
+        .menu-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+        }
+        .menu-item {
+            background: #fff;
+            border: 2px solid #d61c1c;
+            border-radius: 8px;
+            padding: 1rem;
+            text-align: center;
+            transition: 0.2s;
+        }
+        .menu-item:hover {
+            background: #ffe0e0;
+        }
+        .menu-item.asa {
+            background: #fff3e0;
+            border: 2px solid #ff9800;
+        }
+        .menu-item.asa:hover {
+            background: #ffe0b2;
+        }
+        .menu-item.limited {
+            background: #f8e1e6;
+            border: 2px solid #d81b60;
+        }
+        .menu-item.limited:hover {
+            background: #f8bbd0;
+        }
+        .menu-item a {
+            text-decoration: none;
+            color: #d61c1c;
+            font-weight: bold;
+            font-size: 1.1rem;
+        }
+        .menu-item.asa a {
+            color: #ff9800;
+        }
+        .menu-item.limited a {
+            color: #d81b60;
+        }
+        .menu-item a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <header>🍔 マクドナルド クイズ＆ドリル 🍔</header>
+    <div class="container">
+        <h2></h2>
+        <div class="menu-list">
+            <div class="menu-item"><a href="drill-regular.html">レギュラー ドリル</a></div>
+            <div class="menu-item"><a href="quiz-regular.html">レギュラー クイズ</a></div>
+            <div class="menu-item"><a href="quiz-regular-sp.html">レギュラー クイズ（SP）</a></div>
+            <div class="menu-item asa"><a href="drill-asa.html">朝マック ドリル</a></div>
+            <div class="menu-item asa"><a href="quiz-asa.html">朝マック クイズ</a></div>
+            <div class="menu-item limited"><a href="drill-limited.html">期間限定 ドリル</a></div>
+            <div class="menu-item limited"><a href="quiz-limited.html">期間限定 クイズ</a></div>
+        </div>
+    </div>
+</body>
+</html>
