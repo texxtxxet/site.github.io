@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="jp">
 <head>
@@ -6,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>yt-dlp Command Generator</title>
     <style>
-        /* ChatGPTスタイルのコードブロック */
         .code-block {
             position: relative;
             overflow: hidden;
@@ -14,7 +12,7 @@
             border-radius: 5px;
             padding: 15px;
             margin-bottom: 20px;
-            display: block; /* コマンドのウィンドウは最初から表示 */
+            display: block;
         }
 
         .code-block h4 {
@@ -50,7 +48,6 @@
             background-color: #45a049;
         }
 
-        /* フォームスタイル */
         .url-form input[type="text"] {
             padding: 5px;
             width: 80%;
@@ -60,15 +57,15 @@
         .url-form button {
             padding: 5px 10px;
             cursor: pointer;
-            margin-bottom: 5px; /* ボタンとコマンドの間の空白 */
+            margin-bottom: 5px;
         }
     </style>
 </head>
 <body>
 
     <div class="url-form">
-        <label for="url-input">YouTube URL:</label><br>
-        <input type="text" id="url-input" placeholder="Enter YouTube URL"><br>
+        <label for="url-input">YouTube / SNS URL:</label><br>
+        <input type="text" id="url-input" placeholder="Enter URL"><br>
         <button onclick="generateCommands()">Generate Commands</button>
     </div>
 
@@ -91,10 +88,18 @@
     </div>
 
     <div class="code-block">
-        <h4>yt-dlp Video and Audio (MP4)</h4>
+        <h4>yt-dlp Video and Audio (MP4)【タイトル】</h4>
         <pre><code></code></pre>
         <button onclick="copyCode(this)">Copy code</button>
     </div>
+
+    <!-- 新規追加 -->
+    <div class="code-block">
+        <h4>yt-dlp Video and Audio (MP4)【ID】</h4>
+        <pre><code></code></pre>
+        <button onclick="copyCode(this)">Copy code</button>
+    </div>
+    <!-- ここまで追加 -->
 
     <div class="code-block">
         <h4>yt-dlp Custom Video and Audio (MP4 1080p 4000kbps)</h4>
@@ -133,7 +138,6 @@
     </div>
 
 <script>
-    // コードをクリップボードにコピーする関数
     function copyCode(button) {
         var codeBlock = button.parentNode.querySelector('pre');
         var range = document.createRange();
@@ -147,60 +151,52 @@
     function generateCommands() {
         var url = document.getElementById("url-input").value.trim();
 
-        // ===== URLをクリーンに整形 =====
-        // YouTube watch URL
         if (url.includes("youtube.com/watch")) {
             let videoId = url.split("v=")[1].split("&")[0];
             url = "https://www.youtube.com/watch?v=" + videoId;
         }
-        // youtu.be 短縮URL
         if (url.includes("youtu.be/")) {
             let videoId = url.split("youtu.be/")[1].split("?")[0];
             url = "https://www.youtube.com/watch?v=" + videoId;
         }
 
-        // yt-dlp MP3 192kbps コマンド
-        var mp3Command = 'C:\\Users\\user\\yt-dlp\\yt-dlp -x --audio-format mp3 --audio-quality 192k -o "E:\\Download\\%(title)s.%(ext)s" ' + url;
-        var mp3CodeElement = document.querySelectorAll('.code-block code')[2];
-        mp3CodeElement.textContent = mp3Command;
+        // yt-dlp MP3 192kbps
+        document.querySelectorAll('.code-block code')[2].textContent =
+            'C:\\Users\\user\\yt-dlp\\yt-dlp -x --audio-format mp3 --audio-quality 192k -o "E:\\Download\\%(title)s.%(ext)s" ' + url;
         
-        // yt-dlp Audio Only (M4A 128kbps) コマンド
-        var m4aCommand = 'C:\\Users\\user\\yt-dlp\\yt-dlp -x --audio-format m4a --audio-quality 128K -o "E:\\Download\\%(title)s.%(ext)s" ' + url;
-        var m4aCodeElement = document.querySelectorAll('.code-block code')[0];
-        m4aCodeElement.textContent = m4aCommand;
+        // yt-dlp Audio Only (M4A 128kbps)
+        document.querySelectorAll('.code-block code')[0].textContent =
+            'C:\\Users\\user\\yt-dlp\\yt-dlp -x --audio-format m4a --audio-quality 128K -o "E:\\Download\\%(title)s.%(ext)s" ' + url;
         
-        // yt-dlp Video and Audio (MP4) コマンド
-        var mp4Command = 'C:\\Users\\user\\yt-dlp\\yt-dlp -f "bestvideo[ext=mp4]+bestaudio[ext=m4a]/mp4" -o "E:\\Download\\%(title)s.%(ext)s" ' + url;
-        var mp4CodeElement = document.querySelectorAll('.code-block code')[3];
-        mp4CodeElement.textContent = mp4Command;
-        
-        // yt-dlp Custom Video and Audio (MP4 1080p 4000kbps) コマンド
-        var custom1080pCommand = 'C:\\Users\\user\\yt-dlp\\yt-dlp -f "bestvideo[height<=1080][vbr<=4000][ext=mp4]+bestaudio[ext=m4a]/mp4" -o "E:\\Download\\%(title)s.%(ext)s" ' + url;
-        var custom1080pCodeElement = document.querySelectorAll('.code-block code')[4];
-        custom1080pCodeElement.textContent = custom1080pCommand;
-        
-        // yt-dlp Custom Video and Audio (MP4 720p) コマンド
-        var custom720pCommand = 'C:\\Users\\user\\yt-dlp\\yt-dlp -f "bestvideo[height<=720][ext=mp4]+bestaudio[ext=m4a]/mp4" -o "E:\\Download\\%(title)s.%(ext)s" ' + url;
-        var custom720pCodeElement = document.querySelectorAll('.code-block code')[5];
-        custom720pCodeElement.textContent = custom720pCommand;
-        
-        // SNS MP4 Download コマンド
-        var snsCommand = 'C:\\Users\\user\\yt-dlp\\yt-dlp -f "bv*[vcodec^=avc1]+ba/b[ext=mp4]" --merge-output-format mp4 -o "E:\\Download\\%(title)s.%(ext)s" ' + url;
-        var snsCodeElement = document.querySelectorAll('.code-block code')[6];
-        snsCodeElement.textContent = snsCommand;
-        
-        // SNS MP4 Download（ID） コマンド
-        var snsIdCommand = 'C:\\Users\\user\\yt-dlp\\yt-dlp -f "bv*[vcodec^=avc1]+ba/b[ext=mp4]" --merge-output-format mp4 -o "E:\\Download\\%(id)s.%(ext)s" ' + url;
-        var snsIdCodeElement = document.querySelectorAll('.code-block code')[1];
-        snsIdCodeElement.textContent = snsIdCommand;
+        // yt-dlp Video and Audio (MP4)
+        document.querySelectorAll('.code-block code')[3].textContent =
+            'C:\\Users\\user\\yt-dlp\\yt-dlp -f "bestvideo[ext=mp4]+bestaudio[ext=m4a]/mp4" -o "E:\\Download\\%(title)s.%(ext)s" ' + url;
 
-        // SNS MP4 Download（DATE） コマンド
-        var snsDateCommand = 'C:\\Users\\user\\yt-dlp\\yt-dlp -f "bv*[vcodec^=avc1]+ba/b[ext=mp4]" --merge-output-format mp4 -o "E:\\Download\\%(upload_date)s.%(ext)s" ' + url;
-        var snsDateCodeElement = document.querySelectorAll('.code-block code')[7];
-        snsDateCodeElement.textContent = snsDateCommand;
+        // yt-dlp Video and Audio (MP4)【ID】
+        document.querySelectorAll('.code-block code')[4].textContent =
+            'C:\\Users\\user\\yt-dlp\\yt-dlp -f "bestvideo[ext=mp4]+bestaudio[ext=m4a]/mp4" -o "E:\\Download\\%(id)s.%(ext)s" ' + url;
+
+        // yt-dlp Custom Video and Audio (MP4 1080p 4000kbps, avc1固定)
+        document.querySelectorAll('.code-block code')[5].textContent =
+            'C:\\Users\\user\\yt-dlp\\yt-dlp -f "bestvideo[vcodec^=avc1][height<=1080][vbr<=4000][ext=mp4]+bestaudio[ext=m4a]/mp4" -o "E:\\Download\\%(title)s.%(ext)s" ' + url;
+        
+        // yt-dlp Custom Video and Audio (MP4 720p, avc1固定)
+        document.querySelectorAll('.code-block code')[6].textContent =
+            'C:\\Users\\user\\yt-dlp\\yt-dlp -f "bestvideo[vcodec^=avc1][height<=720][ext=mp4]+bestaudio[ext=m4a]/mp4" -o "E:\\Download\\%(title)s.%(ext)s" ' + url;
+
+        // SNS MP4 Download
+        document.querySelectorAll('.code-block code')[7].textContent =
+            'C:\\Users\\user\\yt-dlp\\yt-dlp -f "bv*[vcodec^=avc1]+ba/b[ext=mp4]" --merge-output-format mp4 -o "E:\\Download\\%(title)s.%(ext)s" ' + url;
+
+        // SNS MP4 Download（ID）
+        document.querySelectorAll('.code-block code')[1].textContent =
+            'C:\\Users\\user\\yt-dlp\\yt-dlp -f "bv*[vcodec^=avc1]+ba/b[ext=mp4]" --merge-output-format mp4 -o "E:\\Download\\%(id)s.%(ext)s" ' + url;
+
+        // SNS MP4 Download（DATE）
+        document.querySelectorAll('.code-block code')[8].textContent =
+            'C:\\Users\\user\\yt-dlp\\yt-dlp -f "bv*[vcodec^=avc1]+ba/b[ext=mp4]" --merge-output-format mp4 -o "E:\\Download\\%(upload_date)s.%(ext)s" ' + url;
     }
 </script>
-
 
 </body>
 </html>
