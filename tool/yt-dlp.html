@@ -182,7 +182,7 @@
         
         // yt-dlp Custom Video and Audio (MP4 720p, avc1固定)
         document.querySelectorAll('.code-block code')[6].textContent =
-            'C:\\Users\\user\\yt-dlp\\yt-dlp -f "bestvideo[vcodec^=avc1][height<=720][ext=mp4]+bestaudio[ext=m4a]/mp4" -o "E:\\Download\\%(title)s.%(ext)s" ' + url;
+            'C:\\Users\\user\\yt-dlp\\yt-dlp -f "bestvideo[vcodec^=avc1][height<=720][ext=mp4]+bestaudio[ext=m4a]" -o "E:\\Download\\%(title)s.%(ext)s" ' + url;
 
         // SNS MP4 Download
         document.querySelectorAll('.code-block code')[7].textContent =
